@@ -1,0 +1,42 @@
+name: Deploy to Render
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-backend:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render backend deploy hook
+        if: ${{ secrets.RENDER_BACKEND_DEPLOY_HOOK != '' }}
+        run: |
+          curl -fsSL -X POST "$RENDER_BACKEND_DEPLOY_HOOK"
+        env:
+          RENDER_BACKEND_DEPLOY_HOOK: ${{ secrets.RENDER_BACKEND_DEPLOY_HOOK }}
+
+      - name: Missing backend deploy hook
+        if: ${{ secrets.RENDER_BACKEND_DEPLOY_HOOK == '' }}
+        run: |
+          echo "RENDER_BACKEND_DEPLOY_HOOK secret not set; skipping backend deploy."
+
+  deploy-frontend:
+    name: Deploy Frontend
+    needs: deploy-backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render frontend deploy hook
+        if: ${{ secrets.RENDER_FRONTEND_DEPLOY_HOOK != '' }}
+        run: |
+          curl -fsSL -X POST "$RENDER_FRONTEND_DEPLOY_HOOK"
+        env:
+          RENDER_FRONTEND_DEPLOY_HOOK: ${{ secrets.RENDER_FRONTEND_DEPLOY_HOOK }}
+
+      - name: Missing frontend deploy hook
+        if: ${{ secrets.RENDER_FRONTEND_DEPLOY_HOOK == '' }}
+        run: |
+          echo "RENDER_FRONTEND_DEPLOY_HOOK secret not set; skipping frontend deploy."
+
