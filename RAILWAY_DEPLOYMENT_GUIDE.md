@@ -12,15 +12,26 @@
 
 ### Backend Service Configuration
 
-**CRITICAL**: You need to configure the Root Directory in the Railway dashboard:
+**CRITICAL**: You need to configure the Dockerfile Path in the Railway dashboard:
 
 1. Go to https://railway.com/project/4b83beaa-0da0-4006-ae18-0348356044e4
 2. Click on the `devops-mid-lab-backend` service
 3. Go to **Settings** tab
-4. Under **Build & Deploy** section, find **Root Directory**
-5. Set it to: `be`
-6. Click **Save Changes**
-7. Trigger a new deployment
+4. Scroll down to **Build** section
+5. Find **Dockerfile Path** field (currently shows: `Dockerfile`)
+6. Change it to: `be/Dockerfile`
+7. Click **Update**
+8. Go to **Deploy** section
+9. Verify **Start Command** is: `node ./api/index.js`
+10. Click **Update** if changed
+11. Trigger a new deployment by clicking **Deploy** button at the top
+
+**Alternative Method** (if Dockerfile path doesn't work):
+1. In Railway Dashboard, under **Build** section
+2. Change **Builder** from `Dockerfile` to `Nixpacks`
+3. Under **Custom Build Command**, enter: `cd be && npm ci --omit=dev`
+4. Under **Deploy > Start Command**, enter: `cd be && node ./api/index.js`
+5. Click **Update** and redeploy
 
 ### Environment Variables to Verify/Add
 
@@ -100,16 +111,21 @@ railway link -s <frontend-service-name>
 ## 🔍 Troubleshooting
 
 ### Backend Build Fails with "package-lock.json not found"
-- **Solution**: Set Root Directory to `be` in service settings
+
+- **Solution**: Change Dockerfile Path to `be/Dockerfile` in Build settings
+- Alternative: Switch to Nixpacks builder with custom build command `cd be && npm ci --omit=dev`
 
 ### CORS Errors
+
 - **Solution**: Add frontend URL to `FRONTEND_URL` environment variable in backend service
 
 ### MongoDB Connection Fails
+
 - **Solution**: Verify `MONGO_URI=${{MongoDB.MONGO_URL}}` is set correctly
 - Check MongoDB service is running in the same environment
 
 ### Port Issues
+
 - **Solution**: Railway provides `$PORT` automatically. Ensure your app uses `process.env.PORT`
 
 ## 🌐 URLs After Deployment
