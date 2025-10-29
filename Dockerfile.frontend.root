@@ -1,16 +1,17 @@
-# Frontend Production Dockerfile (for Railway deployment with Root Directory = fe)
+# Frontend Production Dockerfile (for Railway WITHOUT Root Directory set)
+# This file is used when building from repository root
 # Build stage
 FROM node:18-alpine AS build
 WORKDIR /app
 
-# Copy frontend package files (already in fe/ directory context)
-COPY package*.json ./
+# Copy frontend package files from fe/ subdirectory
+COPY fe/package*.json ./
 
 # Install dependencies
 RUN npm ci
 
-# Copy frontend source code (already in fe/ directory context)
-COPY . ./
+# Copy frontend source code from fe/ subdirectory  
+COPY fe/ ./
 
 # Build argument for API URL
 ARG VITE_API_BASE_URL
@@ -28,8 +29,8 @@ RUN apk add --no-cache wget
 # Copy built assets from build stage
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy nginx configuration (from current directory which is fe/)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy nginx configuration from fe/ subdirectory
+COPY fe/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Create non-root user for security
 RUN addgroup -g 1001 -S nodejs && \
