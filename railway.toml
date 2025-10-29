@@ -1,0 +1,3 @@
+[[services]]
+name = "devops-mid-lab-backend"
+source = "be"
