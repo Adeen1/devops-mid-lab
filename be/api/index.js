@@ -12,16 +12,29 @@ app.use(express.json()); // For parsing JSON bodies
 
 // CORS configuration: allow configurable origins, default to permissive for hosted envs
 
+const allowedOrigins = [
+  'http://localhost:3000', // Frontend in Docker
+  'http://localhost:5173', // Frontend in development
+  'http://127.0.0.1:3000', // Alternative localhost
+  'http://127.0.0.1:5173', // Alternative localhost
+  'http://frontend:80', // Docker service name
+  'http://rouse-frontend:80', // Docker container name
+  process.env.FRONTEND_URL, // Railway or other hosted frontend
+  process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : null,
+].filter(Boolean); // Remove null/undefined values
+
 app.use(
   cors({
-    origin: [
-      'http://localhost:3000', // Frontend in Docker
-      'http://localhost:5173', // Frontend in development
-      'http://127.0.0.1:3000', // Alternative localhost
-      'http://127.0.0.1:5173', // Alternative localhost
-      'http://frontend:80', // Docker service name
-      'http://rouse-frontend:80', // Docker container name
-    ],
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+        callback(null, true);
+      } else {
+        callback(null, true); // In production, you might want to restrict this
+      }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
     credentials: true,
