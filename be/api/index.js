@@ -14,7 +14,7 @@ app.use(express.json()); // For parsing JSON bodies
 app.use(
   cors({
     origin: [
-      'http://localhost:3000', // Frontend in Docker
+      "http://localhost:3000", // Frontend in Docker
       'http://localhost:5173', // Frontend in development
       'http://127.0.0.1:3000', // Alternative localhost
       'http://127.0.0.1:5173', // Alternative localhost
