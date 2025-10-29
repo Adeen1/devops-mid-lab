@@ -19,19 +19,24 @@
 3. Go to **Settings** tab
 4. Scroll down to **Build** section
 5. Find **Dockerfile Path** field (currently shows: `Dockerfile`)
-6. Change it to: `be/Dockerfile`
+6. Change it to: `Dockerfile.backend`
 7. Click **Update**
-8. Go to **Deploy** section*
-9. Verify **Start Command** is: `node ./api/index.js`
-10. Click **Update** if changed
-11. Trigger a new deployment by clicking **Deploy** button at the top
+8. Trigger a new deployment by clicking **Deploy** button at the top
 
-**Alternative Method** (if Dockerfile path doesn't work):
-1. In Railway Dashboard, under **Build** section
-2. Change **Builder** from `Dockerfile` to `Nixpacks`
-3. Under **Custom Build Command**, enter: `cd be && npm ci --omit=dev`
-4. Under **Deploy > Start Command**, enter: `cd be && node ./api/index.js`
-5. Click **Update** and redeploy
+### Frontend Service Configuration
+
+**CRITICAL**: Configure the Dockerfile Path and verify environment variables:
+
+1. Go to https://railway.com/project/4b83beaa-0da0-4006-ae18-0348356044e4
+2. Click on the `devops-mid-lab-frontend` service
+3. Go to **Settings** tab
+4. Scroll down to **Build** section
+5. Find **Dockerfile Path** field
+6. Change it to: `Dockerfile.frontend`
+7. Click **Update**
+8. Go to **Variables** tab
+9. Verify `VITE_API_BASE_URL` is set to: `https://devops-mid-lab-backend-production-afd8.up.railway.app`
+10. Trigger a new deployment by clicking **Deploy** button at the top
 
 ### Environment Variables to Verify/Add
 
