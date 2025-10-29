@@ -21,7 +21,7 @@
 5. Find **Dockerfile Path** field (currently shows: `Dockerfile`)
 6. Change it to: `be/Dockerfile`
 7. Click **Update**
-8. Go to **Deploy** section
+8. Go to **Deploy** section*
 9. Verify **Start Command** is: `node ./api/index.js`
 10. Click **Update** if changed
 11. Trigger a new deployment by clicking **Deploy** button at the top

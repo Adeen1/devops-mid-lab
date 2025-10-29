@@ -5,10 +5,10 @@ FROM node:18-alpine AS base
 WORKDIR /app
 
 # ------------------------------------------------------------
-# Dependencies (full, for dev & build)
+# Dependencies (full, for dev & build) - FRONTEND
 # ------------------------------------------------------------
 FROM base AS deps
-COPY package*.json ./
+COPY fe/package*.json ./
 RUN npm ci
 
 # ------------------------------------------------------------
@@ -17,7 +17,7 @@ RUN npm ci
 #   Run   with: docker run --rm -it -p 5173:5173 myapp-dev
 # ------------------------------------------------------------
 FROM deps AS dev
-COPY . .
+COPY fe/ ./
 EXPOSE 5173
 CMD ["npm", "run", "dev"]
 
@@ -25,12 +25,14 @@ CMD ["npm", "run", "dev"]
 # Build target (creates production bundle in /app/dist)
 # ------------------------------------------------------------
 FROM deps AS build
-COPY . .
-# If you rely on env vars at build time, pass them with --build-arg or .env handling as needed
+COPY fe/ ./
+# Build the Vite app
+ARG VITE_API_BASE_URL
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 RUN npm run build:prod
 
 # ------------------------------------------------------------
-# Production static site (nginx)
+# Production static site (nginx) - FRONTEND
 #   Build with: docker build --target prod -t myapp-prod .
 #   Run   with: docker run --rm -p 80:80 myapp-prod
 # ------------------------------------------------------------
@@ -41,7 +43,7 @@ RUN apk add --no-cache wget
 COPY --from=build /app/dist /usr/share/nginx/html
 # Optional custom nginx config (if present in context)
 #   Make sure your nginx.conf defines the server on port 80
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY fe/nginx.conf /etc/nginx/conf.d/default.conf
 # Non-root (defense in depth; nginx runs as nginx user by default on this image)
 RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001
 EXPOSE 80
