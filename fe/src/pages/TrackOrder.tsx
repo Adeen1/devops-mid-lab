@@ -1,15 +1,26 @@
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
+import API_CONFIG from "../config/api";
+
+interface OrderItem {
+  quantity: number;
+  itemName: string;
+}
+
+interface Order {
+  _id: string;
+  customerName: string;
+  orderItems: OrderItem[];
+  orderDate: string;
+  status: string;
+  statusInfo: string;
+}
 
 const TrackOrder = () => {
   const [email, setEmail] = useState("");
-  const [orders, setOrders] = useState([]); // State to hold fetched orders
-  const [customText, setCustomText] = useState(""); // State for custom text input
+  const [orders, setOrders] = useState<Order[]>([]); // State to hold fetched orders
   const [errorMessage, setErrorMessage] = useState(""); // State for error messages
   const [loading, setLoading] = useState(false);
-
-  // const BACKEND_URI = "http://localhost:5000/api";
-  const BACKEND_URI = "http://localhost:5000/api";
 
   document.title = "Track Order";
 
@@ -17,9 +28,9 @@ const TrackOrder = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${BACKEND_URI}/ordersByEmail?email=${encodeURIComponent(
+        `${API_CONFIG.BASE_URL}/api/ordersByEmail?email=${encodeURIComponent(
           email
-        )}&customText=${encodeURIComponent(customText)}`
+        )}`
       );
 
       if (!response.ok) {
@@ -31,7 +42,8 @@ const TrackOrder = () => {
 
       // Sort orders by orderDate in descending order (most recent date and time first)
       ordersData = ordersData.sort(
-        (a, b) => new Date(b.orderDate) - new Date(a.orderDate)
+        (a: Order, b: Order) =>
+          new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()
       );
 
       setOrders(ordersData); // Set the sorted orders to state
@@ -40,26 +52,32 @@ const TrackOrder = () => {
     } catch (error) {
       setLoading(false); // Stop loading if there are no items
 
-      setErrorMessage(error.message);
+      setErrorMessage(
+        error instanceof Error ? error.message : "An error occurred"
+      );
       console.log(error);
       setOrders([]); // Clear orders in case of an error
     }
   };
 
-  const formatOrderItems = (items) => {
+  const formatOrderItems = (items: OrderItem[]) => {
     return items
       .map((item) => `${item.quantity}x ${item.itemName}`)
       .join(", ")
       .replace(/,(?=[^,]*$)/, " and"); // Replace the last comma with " and"
   };
 
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric" as const,
+      month: "2-digit" as const,
+      day: "2-digit" as const,
+    };
     return date.toLocaleDateString("en-CA", options).replace(/-/g, "/"); // YYYY/MM/DD format
   };
 
-  const formatTime = (dateString) => {
+  const formatTime = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleTimeString([], {
       hour: "2-digit",

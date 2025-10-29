@@ -11,31 +11,17 @@ const app = express();
 app.use(express.json()); // For parsing JSON bodies
 
 // CORS configuration: allow configurable origins, default to permissive for hosted envs
-const configuredOrigins = (process.env.CORS_ORIGINS || '')
-  .split(',')
-  .map((s) => s.trim())
-  .filter(Boolean);
-
-const defaultLocalOrigins = [
-  'http://localhost:3000',
-  'http://localhost:5173',
-  'http://127.0.0.1:3000',
-  'http://127.0.0.1:5173',
-  'http://frontend:80',
-  'http://rouse-frontend:80',
-];
-
-const allowedOrigins = configuredOrigins.length > 0 ? configuredOrigins : defaultLocalOrigins;
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow non-browser requests (no origin) and any configured/local origins
-      if (!origin || allowedOrigins.includes(origin) || configuredOrigins.length === 0) {
-        return callback(null, true);
-      }
-      return callback(new Error('CORS not allowed for this origin'));
-    },
+    origin: [
+      'http://localhost:3000', // Frontend in Docker
+      'http://localhost:5173', // Frontend in development
+      'http://127.0.0.1:3000', // Alternative localhost
+      'http://127.0.0.1:5173', // Alternative localhost
+      'http://frontend:80', // Docker service name
+      'http://rouse-frontend:80', // Docker container name
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
     credentials: true,
