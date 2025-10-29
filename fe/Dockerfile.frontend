@@ -1,5 +1,5 @@
 # Frontend Production Dockerfile (for Railway deployment with Root Directory = fe)
-# Build stage
+# Build stage - Updated to support dynamic PORT
 FROM node:18-alpine AS build
 WORKDIR /app
 
