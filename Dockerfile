@@ -50,18 +50,21 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 CMD ["nginx", "-g", "daemon off;"]
 
 # ------------------------------------------------------------
-# API target (Node runtime)
+# API target (Node runtime) - BACKEND SERVICE
 #   Build with: docker build --target api -t myapp-api .
 #   Run   with: docker run --rm -p 5000:5000 myapp-api
 # ------------------------------------------------------------
 FROM node:18-alpine AS api
 WORKDIR /app
+
+# Copy backend package files from be/ directory
+COPY be/package*.json ./
+
 # Install only production deps for slimmer image
-COPY package*.json ./
 RUN npm ci --omit=dev
 
-# Copy app source (JS/TS, API, etc.)
-COPY . .
+# Copy backend source code from be/ directory
+COPY be/ ./
 
 # Non-root user
 RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001 \
