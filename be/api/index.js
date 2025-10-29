@@ -1,10 +1,10 @@
-const express = require("express");
-const mongoose = require("mongoose");
+const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
-const dotenv = require("dotenv");
-const menuRoutes = require("../routes/menuRoutes");
-const itemRoutes = require("../routes/itemRoutes"); // Import the new item routes
-const orderRoutes = require("../routes/orderRoutes")
+const dotenv = require('dotenv');
+const menuRoutes = require('../routes/menuRoutes');
+const itemRoutes = require('../routes/itemRoutes'); // Import the new item routes
+const orderRoutes = require('../routes/orderRoutes');
 dotenv.config();
 
 const app = express();
@@ -14,26 +14,22 @@ app.use(express.json()); // For parsing JSON bodies
 //   methods: ['GET', 'POST', 'PUT', 'UPDATE', 'DELETE'],
 //   allowedHeaders: ['Content-Type']
 // }));
-app.use(cors())
-
+app.use(cors());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGO_URI);
 const db = mongoose.connection;
-db.on("error", (error) => console.error(error));
-db.once("open", () => console.log("Connected to Database"));
+db.on('error', (error) => console.error(error));
+db.once('open', () => console.log('Connected to Database'));
 
 // Use the routes
-app.use("/api", menuRoutes);
-app.use("/api", itemRoutes); // Use item routes
-app.use("/api", orderRoutes); // Use item routes
+app.use('/api', menuRoutes);
+app.use('/api', itemRoutes); // Use item routes
+app.use('/api', orderRoutes); // Use item routes
 
-app.get("/", async (req, res) => {
+app.get('/', async (req, res) => {
   try {
-    res.json("meow"); // Return the items in that category
+    res.json('meow'); // Return the items in that category
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

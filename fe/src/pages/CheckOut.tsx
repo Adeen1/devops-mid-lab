@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
 import axios from "axios";
+import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface OrderItem {
   itemName: string;
@@ -19,7 +19,7 @@ interface CustomerInfo {
 const CheckOut: React.FC = () => {
   const [selectedItems, setSelectedItems] = useState<OrderItem[]>([]);
   const [loading, setLoading] = useState(false);
-  const BACKEND_URI = "https://rouse-be.vercel.app/api"; // API for menu items
+  const BACKEND_URI = "http://localhost:5000/api"; // API for menu items
 
   useEffect(() => {
     const savedItems = localStorage.getItem("selectedItems");
@@ -59,10 +59,14 @@ const CheckOut: React.FC = () => {
       localStorage.setItem("selectedItems", ""); // Clear selected items from local storage
       localStorage.setItem("customerName", customerInfo.name); // Save customer name in local storage
       window.location.href = "/success";
-    } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.message ||
-        "Error submitting order. Please try again.";
+    } catch (error: unknown) {
+      // prefer axios error message when available, otherwise fall back to Error.message
+      let errorMessage = "Error submitting order. Please try again.";
+      if (axios.isAxiosError(error)) {
+        errorMessage = error.response?.data?.message || error.message;
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
       alert(errorMessage);
       console.error(error);
     }

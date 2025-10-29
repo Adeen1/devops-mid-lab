@@ -1,9 +1,9 @@
-const express = require("express");
-const Order = require("../models/Order");
+const express = require('express');
+const Order = require('../models/Order');
 const router = express.Router();
 
 // GET all orders
-router.get("/orders", async (req, res) => {
+router.get('/orders', async (req, res) => {
   try {
     const orders = await Order.find();
     res.json(orders);
@@ -13,12 +13,12 @@ router.get("/orders", async (req, res) => {
 });
 
 // GET a single order by id
-router.get("/orders/:id", async (req, res) => {
+router.get('/orders/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const order = await Order.findById(id);
     if (!order) {
-      return res.status(404).json({ message: "Order not found" });
+      return res.status(404).json({ message: 'Order not found' });
     }
     res.json(order);
   } catch (error) {
@@ -28,14 +28,14 @@ router.get("/orders/:id", async (req, res) => {
 
 // GET all orders by email
 // GET all orders by email
-router.get("/ordersByEmail", async (req, res) => {
+router.get('/ordersByEmail', async (req, res) => {
   try {
     const email = req.query.email;
 
     if (!email) {
       return res
         .status(400)
-        .json({ message: "Email query parameter is required" });
+        .json({ message: 'Email query parameter is required' });
     }
 
     // Find orders by customer email
@@ -44,18 +44,18 @@ router.get("/ordersByEmail", async (req, res) => {
     if (orders.length === 0) {
       return res
         .status(404)
-        .json({ message: "No orders found for this email" });
+        .json({ message: 'No orders found for this email' });
     }
 
     res.json(orders);
   } catch (error) {
     console.error(error); // Log the error to server console
-    res.status(500).json({ message: "An internal server error occurred" });
+    res.status(500).json({ message: 'An internal server error occurred' });
   }
 });
 
 // POST a new order
-router.post("/orders", async (req, res) => {
+router.post('/orders', async (req, res) => {
   const order = new Order({
     customerName: req.body.customerName,
     customerEmail: req.body.customerEmail,
@@ -63,9 +63,9 @@ router.post("/orders", async (req, res) => {
     orderDate: req.body.orderDate || Date.now(), // Default to current date if not provided
     orderItems: req.body.orderItems,
     totalAmount: req.body.totalAmount,
-    status: req.body.status || "Pending",
+    status: req.body.status || 'Pending',
     statusInfo:
-      req.body.statusInfo || "Eg like your order will take 10-15 minutes",
+      req.body.statusInfo || 'Eg like your order will take 10-15 minutes',
   });
 
   try {
@@ -77,7 +77,7 @@ router.post("/orders", async (req, res) => {
 });
 
 // PUT (Update) an order's status, status info, and customer note by id
-router.put("/orders/:id", async (req, res) => {
+router.put('/orders/:id', async (req, res) => {
   try {
     // Create an update object with status, statusInfo, and customerNote
     const updateData = {
@@ -94,7 +94,7 @@ router.put("/orders/:id", async (req, res) => {
     );
 
     if (!updatedOrder) {
-      return res.status(404).json({ message: "Order not found" });
+      return res.status(404).json({ message: 'Order not found' });
     }
 
     res.status(200).json(updatedOrder);
@@ -104,26 +104,26 @@ router.put("/orders/:id", async (req, res) => {
 });
 
 // DELETE an order by id
-router.delete("/orders/:id", async (req, res) => {
+router.delete('/orders/:id', async (req, res) => {
   try {
     const deletedOrder = await Order.findByIdAndDelete(req.params.id);
     if (!deletedOrder) {
-      return res.status(404).json({ message: "Order not found" });
+      return res.status(404).json({ message: 'Order not found' });
     }
 
-    res.status(200).json({ message: "Order deleted successfully" });
+    res.status(200).json({ message: 'Order deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
 // DELETE all orders
-router.delete("/orders", async (req, res) => {
+router.delete('/orders', async (req, res) => {
   try {
     const result = await Order.deleteMany({}); // Delete all documents in the collection
 
     if (result.deletedCount === 0) {
-      return res.status(404).json({ message: "No orders found to delete" });
+      return res.status(404).json({ message: 'No orders found to delete' });
     }
 
     res

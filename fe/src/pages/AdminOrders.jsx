@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 // Modal Component for showing ordered items and customer notes
 const OrderItemsModal = ({ show, handleClose, orderItems, customerNote }) => {
@@ -138,7 +138,7 @@ const AdminOrders = () => {
   const [loading, setLoading] = useState(true);
 
   // const BACKEND_URI = "http://localhost:5000/api";
-  const BACKEND_URI = "https://rouse-be.vercel.app/api";
+  const BACKEND_URI = "http://localhost:5000/api";
 
   // Fetch all orders when the component loads
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { Loader2 } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const TrackOrder = () => {
   const [email, setEmail] = useState("");
@@ -9,7 +9,7 @@ const TrackOrder = () => {
   const [loading, setLoading] = useState(false);
 
   // const BACKEND_URI = "http://localhost:5000/api";
-  const BACKEND_URI = "https://rouse-be.vercel.app/api";
+  const BACKEND_URI = "http://localhost:5000/api";
 
   document.title = "Track Order";
 

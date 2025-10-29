@@ -1,17 +1,16 @@
 // App.jsx
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import About from "./pages/About";
-import Navigation from "./pages/Navigation";
-import Order from "./pages/Order";
-import Menu from "./pages/Menu";
 import Admin from "./pages/Admin";
 import Contact from "./pages/Contact";
-// @ts-ignore
+import Home from "./pages/Home";
+import Menu from "./pages/Menu";
+import Navigation from "./pages/Navigation";
+import Order from "./pages/Order";
 import TrackOrder from "./pages/TrackOrder";
-// @ts-ignore
-import AdminOrders from "./pages/AdminOrders";
+
 import AdminMenu from "./pages/AdminMenu";
+import AdminOrders from "./pages/AdminOrders";
 import CheckOut from "./pages/CheckOut";
 import Success from "./pages/Success";
 function App() {

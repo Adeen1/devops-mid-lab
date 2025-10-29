@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
 import { LucideShoppingBag, MapPinCheckInside } from "lucide-react";
+import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 
@@ -35,7 +35,7 @@ const Order: React.FC = () => {
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
 
   // const BACKEND_URI = "http://localhost:5000/api/menu";
-  const BACKEND_URI = "https://rouse-be.vercel.app/api/menu";
+  const BACKEND_URI = "http://localhost:5000/api/menu";
 
   useEffect(() => {
     const fetchMenuData = async () => {
@@ -46,8 +46,10 @@ const Order: React.FC = () => {
         }
         const data: Category[] = await response.json();
         setMenuData(data);
-      } catch (error: any) {
-        setError(error.message);
+      } catch (error: unknown) {
+        setError(
+          error instanceof Error ? error.message : "An unknown error occurred"
+        );
       } finally {
         setLoading(false);
       }
@@ -107,7 +109,7 @@ const Order: React.FC = () => {
 
   const handleSubmitOrder = async () => {
     // const BACKEND_URI = "http://localhost:5000/api/orders";
-    const BACKEND_URI = "https://rouse-be.vercel.app/api/orders";
+    const BACKEND_URI = "http://localhost:5000/api/orders";
 
     const orderItems = selectedItems.map((item) => {
       const menuItem = menuData
@@ -156,9 +158,11 @@ const Order: React.FC = () => {
         throw new Error(result.message || "Failed to submit order");
 
       setStep(3); // Success step
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
-      setError(error.message);
+      setError(
+        error instanceof Error ? error.message : "An unknown error occurred"
+      );
     }
   };
 

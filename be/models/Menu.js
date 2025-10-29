@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const itemSchema = new mongoose.Schema({
   name: {
@@ -23,5 +23,5 @@ const menuCategorySchema = new mongoose.Schema({
   items: [itemSchema],
 });
 
-const Menu = mongoose.model("Menu", menuCategorySchema);
+const Menu = mongoose.model('Menu', menuCategorySchema);
 module.exports = Menu;

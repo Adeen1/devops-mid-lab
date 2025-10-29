@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
 import {
-  Plus,
-  Minus,
-  Loader2,
-  X,
-  LucideShoppingBag,
   ArrowRight,
+  Loader2,
+  LucideShoppingBag,
+  Minus,
+  Plus,
+  X,
 } from "lucide-react"; // Import the X icon
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 interface Item {
@@ -32,7 +32,7 @@ const Menu: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<OrderItem[]>([]);
 
-  const BACKEND_URI = "https://rouse-be.vercel.app/api/menu";
+  const BACKEND_URI = "http://localhost:5000/api/menu";
   document.title = "Menu";
 
   useEffect(() => {
@@ -44,8 +44,10 @@ const Menu: React.FC = () => {
         }
         const data: Category[] = await response.json();
         setMenuData(data);
-      } catch (error: any) {
-        setError(error.message);
+      } catch (error: unknown) {
+        setError(
+          error instanceof Error ? error.message : "An unknown error occurred"
+        );
       } finally {
         setLoading(false);
       }

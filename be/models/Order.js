@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const orderItemSchema = new mongoose.Schema({
   itemName: {
@@ -26,7 +26,7 @@ const orderSchema = new mongoose.Schema({
   },
   customerNote: {
     type: String,
-    default: "",
+    default: '',
   },
   orderDate: {
     type: Date,
@@ -39,13 +39,13 @@ const orderSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: "Pending",
+    default: 'Pending',
   },
   statusInfo: {
     type: String,
-    default: "Eg like your order will take 10-15 minutes",
+    default: 'Eg like your order will take 10-15 minutes',
   },
 });
 
-const Order = mongoose.model("Order", orderSchema);
+const Order = mongoose.model('Order', orderSchema);
 module.exports = Order;

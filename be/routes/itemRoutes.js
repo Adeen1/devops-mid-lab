@@ -1,13 +1,13 @@
-const express = require("express");
-const Menu = require("../models/Menu");
+const express = require('express');
+const Menu = require('../models/Menu');
 const router = express.Router();
 
 // GET all items for a specific menu category by category ID
-router.get("/menu/:id/items", async (req, res) => {
+router.get('/menu/:id/items', async (req, res) => {
   try {
     const menu = await Menu.findById(req.params.id);
     if (!menu) {
-      return res.status(404).json({ message: "Menu category not found" });
+      return res.status(404).json({ message: 'Menu category not found' });
     }
     res.json(menu.items); // Return the items in that category
   } catch (error) {
@@ -16,11 +16,11 @@ router.get("/menu/:id/items", async (req, res) => {
 });
 
 // POST a new item to a specific menu category by category ID
-router.post("/menu/:id/items", async (req, res) => {
+router.post('/menu/:id/items', async (req, res) => {
   try {
     const menu = await Menu.findById(req.params.id);
     if (!menu) {
-      return res.status(404).json({ message: "Menu category not found" });
+      return res.status(404).json({ message: 'Menu category not found' });
     }
 
     const newItem = {

@@ -1,9 +1,9 @@
-const express = require("express");
-const Menu = require("../models/Menu");
+const express = require('express');
+const Menu = require('../models/Menu');
 const router = express.Router();
 
 // GET all menu categories
-router.get("/menu", async (req, res) => {
+router.get('/menu', async (req, res) => {
   try {
     const menu = await Menu.find();
     res.json(menu);
@@ -12,9 +12,9 @@ router.get("/menu", async (req, res) => {
   }
 });
 
-router.get("/menu/:id", async (req, res) => {
+router.get('/menu/:id', async (req, res) => {
   try {
-    const id = req.params.id
+    const id = req.params.id;
     const category = await Menu.findById(id);
     res.json(category);
   } catch (error) {
@@ -23,7 +23,7 @@ router.get("/menu/:id", async (req, res) => {
 });
 
 // POST a new menu category
-router.post("/menu", async (req, res) => {
+router.post('/menu', async (req, res) => {
   const menuCategory = new Menu({
     category: req.body.category,
     icon: req.body.icon,
@@ -40,7 +40,7 @@ router.post("/menu", async (req, res) => {
 
 
 // PUT (Update) a category by id without modifying the items array
-router.put("/menu/:id", async (req, res) => {
+router.put('/menu/:id', async (req, res) => {
   try {
     const updatedCategory = await Menu.findByIdAndUpdate(
       req.params.id,  // Find the category by id
@@ -53,7 +53,7 @@ router.put("/menu/:id", async (req, res) => {
     );
 
     if (!updatedCategory) {
-      return res.status(404).json({ message: "Category not found" });
+      return res.status(404).json({ message: 'Category not found' });
     }
 
     res.status(200).json(updatedCategory);
@@ -65,15 +65,15 @@ router.put("/menu/:id", async (req, res) => {
 
 
 // DELETE a category by id
-router.delete("/menu/:id", async (req, res) => {
+router.delete('/menu/:id', async (req, res) => {
   try {
     const deletedCategory = await Menu.findByIdAndDelete(req.params.id); // Find category by id and delete it
 
     if (!deletedCategory) {
-      return res.status(404).json({ message: "Category not found" });
+      return res.status(404).json({ message: 'Category not found' });
     }
 
-    res.status(200).json({ message: "Category deleted successfully" });
+    res.status(200).json({ message: 'Category deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

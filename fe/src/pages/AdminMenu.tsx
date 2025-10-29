@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
 
 interface Item {
   _id: string;
@@ -21,10 +21,7 @@ const AdminMenu: React.FC = () => {
   const [newItems, setNewItems] = useState<{
     [key: string]: { name: string; price: string };
   }>({});
-  // @ts-ignore
-  const [newItemName, setNewItemName] = useState("");
-  // @ts-ignore
-  const [newItemPrice, setNewItemPrice] = useState("");
+  // newItemName/newItemPrice were unused — use `newItems` map instead
   // const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(
     null
@@ -45,7 +42,7 @@ const AdminMenu: React.FC = () => {
     itemId?: string;
   } | null>(null);
 
-  const BACKEND_URI = "https://rouse-be.vercel.app/api";
+  const BACKEND_URI = "http://localhost:5000/api";
 
   // Fetch categories from the server
   useEffect(() => {
@@ -113,8 +110,12 @@ const AdminMenu: React.FC = () => {
             cat._id === updatedCategory._id ? updatedCategory : cat
           )
         );
-        setNewItemName("");
-        setNewItemPrice("");
+        // clear the new item inputs for this category
+        setNewItems((prev) => {
+          const copy = { ...prev };
+          delete copy[propCategory];
+          return copy;
+        });
       } catch (error) {
         console.error("Error adding item:", error);
       }
