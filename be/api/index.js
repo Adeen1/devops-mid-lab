@@ -9,12 +9,23 @@ dotenv.config();
 
 const app = express();
 app.use(express.json()); // For parsing JSON bodies
-// app.use(cors({
-//   origin: 'http://localhost:5173', // Replace with your frontend URL
-//   methods: ['GET', 'POST', 'PUT', 'UPDATE', 'DELETE'],
-//   allowedHeaders: ['Content-Type']
-// }));
-app.use(cors());
+
+// CORS configuration for Docker and development environments
+app.use(
+  cors({
+    origin: [
+      'http://localhost:3000', // Frontend in Docker
+      'http://localhost:5173', // Frontend in development
+      'http://127.0.0.1:3000', // Alternative localhost
+      'http://127.0.0.1:5173', // Alternative localhost
+      'http://frontend:80', // Docker service name
+      'http://rouse-frontend:80', // Docker container name
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    credentials: true,
+  })
+);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI);

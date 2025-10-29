@@ -8,6 +8,7 @@ import {
 } from "lucide-react"; // Import the X icon
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { API_CONFIG } from "../config/api";
 
 interface Item {
   name: string;
@@ -32,13 +33,12 @@ const Menu: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<OrderItem[]>([]);
 
-  const BACKEND_URI = "http://localhost:5000/api/menu";
   document.title = "Menu";
 
   useEffect(() => {
     const fetchMenuData = async () => {
       try {
-        const response = await fetch(BACKEND_URI);
+        const response = await fetch(API_CONFIG.ENDPOINTS.MENU);
         if (!response.ok) {
           throw new Error("Failed to fetch menu data");
         }
