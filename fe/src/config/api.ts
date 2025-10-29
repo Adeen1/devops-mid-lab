@@ -1,17 +1,22 @@
-// API configuration that works in both development and production
+// API configuration that works in dev, Docker, and static hosts (Render)
 const getApiBaseUrl = () => {
-  // Check if we're in development mode
-  if (import.meta.env.DEV) {
-    return import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+  // Prefer explicit env override in any mode
+  if (import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL as string;
   }
 
-  // In production (Docker), use the same origin since nginx proxies /api requests
+  // Development: default to local backend
+  if (import.meta.env.DEV) {
+    return "http://localhost:5000";
+  }
+
+  // Production: same-origin if served behind a proxy (e.g., Docker nginx)
   if (typeof window !== "undefined") {
     return `${window.location.protocol}//${window.location.host}`;
   }
 
-  // Fallback
-  return import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+  // Server-side fallback
+  return "http://localhost:5000";
 };
 
 const API_BASE_URL = getApiBaseUrl();
