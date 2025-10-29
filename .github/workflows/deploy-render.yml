@@ -1,7 +1,6 @@
 name: Deploy to Render
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
@@ -47,4 +46,3 @@ jobs:
         if: ${{ secrets.RENDER_FRONTEND_DEPLOY_HOOK == '' }}
         run: |
           echo "RENDER_FRONTEND_DEPLOY_HOOK secret not set; skipping frontend deploy."
-
