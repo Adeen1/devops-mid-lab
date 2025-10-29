@@ -170,7 +170,7 @@ const AdminOrders = () => {
 
   useEffect(() => {
     console.log(selectedOrder);
-  }, selectedOrder);
+  }, [selectedOrder]);
 
   // Function to open modal and show ordered items
   const handleShowItems = (order) => {
