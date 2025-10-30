@@ -1,5 +1,6 @@
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import API_CONFIG from "../config/api";
 
 interface Item {
   _id: string;
@@ -13,6 +14,9 @@ interface Category {
   icon: string;
   items: Item[];
 }
+
+// Use API config for backend URL
+const BACKEND_URI = `${API_CONFIG.BASE_URL}/api`;
 
 const AdminMenu: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -41,8 +45,6 @@ const AdminMenu: React.FC = () => {
     categoryId: string;
     itemId?: string;
   } | null>(null);
-
-  const BACKEND_URI = "http://localhost:5000/api";
 
   // Fetch categories from the server
   useEffect(() => {
