@@ -12,9 +12,8 @@ RUN npm ci
 # Copy frontend source code (already in fe/ directory context)
 COPY . ./
 
-# Build argument for API URL with default value
-ARG VITE_API_BASE_URL="https://devops-mid-lab-backend-production-afd8.up.railway.app"
-ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+# Set environment variable for API URL (Railway will override this)
+ENV VITE_API_BASE_URL=https://devops-mid-lab-backend-production-afd8.up.railway.app
 
 # Debug: Show the API URL being used
 RUN echo "Building with API URL: $VITE_API_BASE_URL"
