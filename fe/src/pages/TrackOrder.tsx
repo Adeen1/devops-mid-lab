@@ -102,7 +102,7 @@ const TrackOrder = () => {
       <div className="flex flex-col place-content-center sm:flex-row gap-5 p-6">
         <div className="w-full sm:w-1/2">
           <label htmlFor="email" className="block text-white mb-2 text-3xl">
-            Enter email to view your order(s) status:
+            Enter your email to view your order(s) status:
           </label>
           <input
             type="text"
