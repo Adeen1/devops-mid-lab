@@ -13,7 +13,7 @@ RUN npm ci
 COPY . ./
 
 # Build argument for API URL with default value
-ARG VITE_API_BASE_URL=https://devops-mid-lab-backend-production-afd8.up.railway.app
+ARG VITE_API_BASE_URL="https://devops-mid-lab-backend-production-afd8.up.railway.app"
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
 # Debug: Show the API URL being used
