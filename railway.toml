@@ -1,3 +1,7 @@
 [[services]]
 name = "devops-mid-lab-backend"
 source = "be"
+
+[[services]]
+name = "devops-mid-lab-frontend"
+source = "fe"
