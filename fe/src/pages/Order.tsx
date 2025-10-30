@@ -1,7 +1,7 @@
 import { LucideShoppingBag, MapPinCheckInside } from "lucide-react";
 import React, { useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
+import API_CONFIG from "../config/api";
 
 interface Item {
   name: string;
@@ -34,8 +34,7 @@ const Order: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
 
-  // const BACKEND_URI = "http://localhost:5000/api/menu";
-  const BACKEND_URI = "http://localhost:5000/api/menu";
+  const BACKEND_URI = `${API_CONFIG.BASE_URL}/api/menu`;
 
   useEffect(() => {
     const fetchMenuData = async () => {
@@ -108,8 +107,7 @@ const Order: React.FC = () => {
   // };
 
   const handleSubmitOrder = async () => {
-    // const BACKEND_URI = "http://localhost:5000/api/orders";
-    const BACKEND_URI = "http://localhost:5000/api/orders";
+    const BACKEND_URI = `${API_CONFIG.BASE_URL}/api/orders`;
 
     const orderItems = selectedItems.map((item) => {
       const menuItem = menuData

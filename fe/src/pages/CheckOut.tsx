@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import API_CONFIG from "../config/api";
 
 interface OrderItem {
   itemName: string;
@@ -19,7 +20,7 @@ interface CustomerInfo {
 const CheckOut: React.FC = () => {
   const [selectedItems, setSelectedItems] = useState<OrderItem[]>([]);
   const [loading, setLoading] = useState(false);
-  const BACKEND_URI = "http://localhost:5000/api"; // API for menu items
+  const BACKEND_URI = `${API_CONFIG.BASE_URL}/api`; // API for menu items
 
   useEffect(() => {
     const savedItems = localStorage.getItem("selectedItems");
