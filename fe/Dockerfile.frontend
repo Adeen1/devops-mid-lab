@@ -12,9 +12,12 @@ RUN npm ci
 # Copy frontend source code (already in fe/ directory context)
 COPY . ./
 
-# Build argument for API URL
-ARG VITE_API_BASE_URL
+# Build argument for API URL - Railway passes env vars as build args
+ARG VITE_API_BASE_URL=https://devops-mid-lab-backend-production-afd8.up.railway.app
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+
+# Debug: Show the API URL being used
+RUN echo "Building with API URL: $VITE_API_BASE_URL"
 
 # Build the application
 RUN npm run build:prod
