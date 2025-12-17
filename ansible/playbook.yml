@@ -1,8 +1,12 @@
 ---
-- name: Configure Development Environment
+- name: Configure and Deploy Lab Environment
   hosts: local
   gather_facts: yes
-  become: false  # Assuming running on local machine/WSL without root needed for some or asking for pass
+  become: false
+
+  vars:
+    k8s_dir: "../k8s"
+    namespace: "devops-mid-lab"
 
   tasks:
     - name: Check if Docker is installed
@@ -27,18 +31,45 @@
         msg: "Kubectl is installed: {{ kubectl_check.stdout }}"
       when: kubectl_check.rc == 0
 
-    - name: Create a local directory for k8s configs
-      file:
-        path: "~/k8s-configs"
-        state: directory
-        mode: '0755'
-
-    - name: Ensure .env exists (demo task)
+    - name: Ensure .env exists
       stat:
         path: "../.env"
       register: env_file
 
     - name: Warn if .env missing
       debug:
-        msg: "WARNING: .env file is missing!"
+        msg: "WARNING: .env file is missing! Deployment might fail."
       when: not env_file.stat.exists
+
+    - name: Create Namespace
+      command: kubectl create namespace {{ namespace }} --dry-run=client -o yaml | kubectl apply -f -
+      register: ns_create
+      changed_when: "'created' in ns_create.stdout"
+
+    - name: Apply Secrets (Placeholder - real secrets should be handled securely)
+      command: kubectl apply -f {{ k8s_dir }}/secrets.yaml -n {{ namespace }}
+      ignore_errors: yes
+      register: secrets_apply
+      changed_when: "'configured' in secrets_apply.stdout or 'created' in secrets_apply.stdout"
+
+    - name: Deploy Databases (Mongo, Postgres)
+      command: kubectl apply -f {{ k8s_dir }}/database.yaml -n {{ namespace }}
+      register: db_deploy
+      changed_when: "'configured' in db_deploy.stdout or 'created' in db_deploy.stdout"
+
+    - name: Deploy Redis
+      command: kubectl apply -f {{ k8s_dir }}/redis.yaml -n {{ namespace }}
+      register: redis_deploy
+      changed_when: "'configured' in redis_deploy.stdout or 'created' in redis_deploy.stdout"
+
+    - name: Deploy Backend App
+      # Note: This assumes envsubst has already run or isn't needed for this step. 
+      # In real CI, we use envsubst. Here we just apply what's there for config mgmt demo.
+      command: kubectl apply -f {{ k8s_dir }}/backend.yaml -n {{ namespace }}
+      ignore_errors: yes
+      register: app_deploy
+      changed_when: "'configured' in app_deploy.stdout or 'created' in app_deploy.stdout"
+
+    - name: Deployment Summary
+      debug:
+        msg: "Deployment tasks completed. Check status with: kubectl get all -n {{ namespace }}"

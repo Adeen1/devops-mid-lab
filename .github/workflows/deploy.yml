@@ -156,7 +156,7 @@ jobs:
           # Create secret for DB connection
           kubectl create secret generic app-secrets \
             --namespace devops-mid-lab \
-            --from-literal=POSTGRES_URI="postgres://dbadmin:dbpassword@$RDS_ENDPOINT/labdb" \
+            --from-literal=POSTGRES_URI="postgres://postgres:password123!@$RDS_ENDPOINT/labdb?ssl=true" \
             --from-literal=MONGO_URI="mongodb://mongo:27017/devops_mid_lab" \
             --dry-run=client -o yaml | kubectl apply -f -
             
