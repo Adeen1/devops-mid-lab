@@ -53,8 +53,7 @@ jobs:
       - name: Install deps
         run: npm install
 
-      - name: Client Lint (Disabled)
-        run: echo "Skipping client lint"
+
 
       - name: Build
         run: npm run build:prod
