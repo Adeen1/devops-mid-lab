@@ -26,8 +26,8 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        npm install
-        cd client && npm install
+        cd server && npm install
+        cd ../client && npm install
 
     - name: Lint
       run: npm run lint --if-present
