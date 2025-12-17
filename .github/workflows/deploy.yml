@@ -42,10 +42,46 @@ jobs:
         shell: pwsh
         run: ./cleanup_aws.ps1
 
+      - name: Check Existing Infrastructure
+        id: check_infra
+        shell: pwsh
+        run: |
+          $CLUSTER_NAME = "adeen-devops"
+          $DB_ID = "devops-mid-lab-db"
+          
+          # Check EKS
+          Try {
+            $clusterStatus = aws eks describe-cluster --name $CLUSTER_NAME --region ${{ env.AWS_REGION }} --query "cluster.status" --output text
+            Write-Host "Cluster Status: $clusterStatus"
+          } Catch {
+            $clusterStatus = "NOT_FOUND"
+            Write-Host "Cluster $CLUSTER_NAME not found."
+          }
+
+          # Check RDS
+          Try {
+            $dbEndpoint = aws rds describe-db-instances --db-instance-identifier $DB_ID --region ${{ env.AWS_REGION }} --query "DBInstances[0].Endpoint.Address" --output text
+            Write-Host "DB Endpoint: $dbEndpoint"
+          } Catch {
+            $dbEndpoint = ""
+            Write-Host "DB $DB_ID not found."
+          }
+
+          if ($clusterStatus -eq "ACTIVE" -and $dbEndpoint -ne "") {
+            Write-Host "Infrastructure exists and is active. Skipping Terraform."
+            "SKIP_TF=true" | Out-File -FilePath $env:GITHUB_ENV -Append
+            "RDS_ENDPOINT=$dbEndpoint" | Out-File -FilePath $env:GITHUB_ENV -Append
+          } else {
+            Write-Host "Infrastructure missing or not ready. Proceeding with Terraform."
+            "SKIP_TF=false" | Out-File -FilePath $env:GITHUB_ENV -Append
+          }
+
       - name: Setup Terraform
+        if: env.SKIP_TF != 'true'
         uses: hashicorp/setup-terraform@v3
 
       - name: Validate & Setup Network
+        if: env.SKIP_TF != 'true'
         id: check_vpc
         shell: pwsh
         run: |
@@ -78,6 +114,7 @@ jobs:
           }
             
       - name: Terraform Init & Apply
+        if: env.SKIP_TF != 'true'
         working-directory: infra
         run: |
           terraform init
@@ -99,17 +136,20 @@ jobs:
 
       - name: Create Kubeconfig
         run: |
-          aws eks update-kubeconfig --name lab-exam-cluster --region ${{ env.AWS_REGION }}
+          aws eks update-kubeconfig --name adeen-devops --region ${{ env.AWS_REGION }}
 
       - name: Deploy to K8s
         run: |
           # Ensure namespace exists (using devops-mid-lab to match k8s files)
           kubectl create namespace devops-mid-lab --dry-run=client -o yaml | kubectl apply -f -
 
-          # Get RDS Endpoint from Terraform output
-          cd infra
-          RDS_ENDPOINT=$(terraform output -raw db_instance_endpoint)
-          cd ..
+          # Get RDS Endpoint
+          # If we skipped TF, RDS_ENDPOINT is already in env
+          if [[ -z "$RDS_ENDPOINT" ]]; then
+             cd infra
+             RDS_ENDPOINT=$(terraform output -raw rds_endpoint)
+             cd ..
+          fi
           
           echo "Deploying with DB: $RDS_ENDPOINT"
           

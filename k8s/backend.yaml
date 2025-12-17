@@ -30,7 +30,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: app-secrets
-              key: DATABASE_URL
+              key: POSTGRES_URI
         - name: REDIS_URI
           value: redis://redis:6379
 

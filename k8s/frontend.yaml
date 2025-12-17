@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
       - name: frontend
-        # Image updated to ECR image
-        image: 184437145027.dkr.ecr.us-east-1.amazonaws.com/lab-exam-backend:latest
+        # Image will be updated by CI/CD
+        image: ${REPLACE_WITH_ECR_FE_IMAGE}
         imagePullPolicy: Always
 
         ports:
@@ -29,12 +29,12 @@ spec:
         - name: NODE_ENV
           value: "production"
         - name: MONGO_URI
+          value: "mongodb://mongo:27017/devops_mid_lab"
+        - name: POSTGRES_URI
           valueFrom:
             secretKeyRef:
               name: app-secrets
-              key: MONGO_URI
-        - name: POSTGRES_URI
-          value: postgresql://postgres:password123@postgres:5432/devops_mid_lab
+              key: POSTGRES_URI
         - name: REDIS_URI
           value: redis://redis:6379
 ---
