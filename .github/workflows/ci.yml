@@ -27,8 +27,8 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      - name: Lint (ESLint)
-        run: npx eslint .
+      # - name: Lint (ESLint)
+      #   run: npx eslint .
 
       - name: Run tests
         run: npm test -- --ci --reporters=default --colors

@@ -30,7 +30,9 @@ jobs:
         cd ../client && npm install
 
     - name: Lint
-      run: npm run lint --if-present
+      run: |
+        cd server && npm run lint --if-present
+        cd ../client && npm run lint --if-present
 
     # - name: Run Tests
     #   run: npm test
