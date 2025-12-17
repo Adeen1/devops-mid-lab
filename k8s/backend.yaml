@@ -1,44 +1,54 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
-  namespace: lab-final
+  name: app
+  namespace: devops-mid-lab
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: backend
+      app: devops-mid-lab-app
   template:
     metadata:
       labels:
-        app: backend
+        app: devops-mid-lab-app
     spec:
       containers:
-      - name: backend
-        # Image will be updated by CI/CD
-        image: $REPLACE_WITH_ECR_BE_IMAGE
+      - name: app
+        image: devops-mid-lab-app:latest # Ensure this image is built/pushed
+        imagePullPolicy: IfNotPresent # For local usage
         ports:
         - containerPort: 5000
         env:
         - name: PORT
           value: "5000"
-        - name: DATABASE_URL
+        - name: NODE_ENV
+          value: "production"
+        - name: MONGO_URI
           valueFrom:
             secretKeyRef:
               name: app-secrets
-              key: DATABASE_URL
-        - name: REDIS_URL
-          value: "redis://redis:6379"
+              key: MONGO_URI
+        - name: POSTGRES_URI
+          # Construct connection string from secret parts or use full URI
+          # Example assumes code can handle parts or construct it.
+          # Here simply pointing hardcoded or using secret ref if available.
+          # For now, using composed string helper or assumption env var is set
+          value: postgresql://postgres:password123@postgres:5432/devops_mid_lab
+        - name: REDIS_URI
+          value: redis://redis:6379
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend
-  namespace: lab-final
+  name: app-service
+  namespace: devops-mid-lab
 spec:
-  type: ClusterIP
-  ports:
-  - port: 5000
-    targetPort: 5000
+  type: LoadBalancer # Or NodePort for minikube
   selector:
-    app: backend
+    app: devops-mid-lab-app
+  ports:
+  - port: 80
+    targetPort: 5000
+    protocol: TCP

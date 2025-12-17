@@ -1,55 +1,58 @@
 module "db" {
   source = "terraform-aws-modules/rds/aws"
 
-  identifier = "lab-exam-db"
+  identifier = "devops-mid-lab-db"
 
   engine            = "postgres"
-  engine_version    = "14"
+  engine_version    = "15"
   instance_class    = "db.t3.micro" # Free tier eligible often
-  allocated_storage = 5
+  allocated_storage = 20
 
-  db_name  = "labdb"
-  username = "dbadmin"
+  db_name  = var.db_name
+  username = var.db_username
+  password = var.db_password
   port     = "5432"
 
   iam_database_authentication_enabled = true
 
-  vpc_security_group_ids = [aws_security_group.rds.id]
-  maintenance_window     = "Mon:00:00-Mon:03:00"
-  backup_window          = "03:00-06:00"
-  
-  # DB subnet group
-  create_db_subnet_group = true
-  subnet_ids             = local.subnet_ids
+  vpc_security_group_ids = [module.security_group.security_group_id]
 
-  # Family
-  family = "postgres14"
-  major_engine_version = "14"
-  
-  skip_final_snapshot = true # For lab/demo to avoid hang on delete
-}
-
-resource "aws_security_group" "rds" {
-  name        = "lab-exam-rds-sg"
-  description = "Allow PostgreSQL inbound traffic"
-  vpc_id      = local.vpc_id
-
-  ingress {
-    description = "PostgreSQL from VPC"
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"] # Adjust if using different VPC CIDR
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  # Database Deletion Protection
+  deletion_protection = false # Set to true for prod
+  skip_final_snapshot = true 
 
   tags = {
-    Name = "lab-exam-rds-sg"
+    Owner       = "user"
+    Environment = "dev"
   }
+
+  # DB subnet group
+  create_db_subnet_group = true
+  subnet_ids             = module.vpc.private_subnets
+
+  # DB parameter group
+  family = "postgres15"
+
+  # DB option group
+  major_engine_version = "15"
+}
+
+module "security_group" {
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "~> 5.0"
+
+  name        = "devops-mid-lab-db-sg"
+  description = "Complete PostgreSQL example security group"
+  vpc_id      = module.vpc.vpc_id
+
+  # Ingress to allow access from VPC CIDR (simplification for lab)
+  ingress_with_cidr_blocks = [
+    {
+      from_port   = 5432
+      to_port     = 5432
+      protocol    = "tcp"
+      description = "PostgreSQL access from within VPC"
+      cidr_blocks = module.vpc.vpc_cidr_block
+    },
+  ]
 }

@@ -77,11 +77,21 @@ jobs:
             "TF_VAR_create_vpc=true" | Out-File -FilePath $env:GITHUB_ENV -Append
           }
             
-      - name: Terraform Init & Apply
+      - name: Terraform Init
         working-directory: infra
-        run: |
-          terraform init
-          terraform apply -auto-approve
+        run: terraform init
+
+      - name: Import Existing Resources
+        working-directory: infra
+        shell: pwsh
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: ./import_resources.ps1
+
+      - name: Terraform Apply
+        working-directory: infra
+        run: terraform apply -auto-approve
 
       - name: Login to Amazon ECR
         id: login-ecr

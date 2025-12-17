@@ -1,51 +1,43 @@
-# DevOps Report - Lab Final Exam
+# DevOps Project Report
 
-## Technologies Used
-- **Containerization**: Docker, Docker Compose
-- **Orchestration**: Kubernetes (AWS EKS)
-- **Infrastructure as Code**: Terraform (AWS Provider, Helm Provider)
-- **CI/CD**: GitHub Actions
-- **Monitoring**: Prometheus, Grafana (via Helm chart)
-- **Database**: AWS RDS (PostgreSQL)
-- **Configuration Management**: Ansible (for K8s configuration)
+## 1. Technologies Used
+- **Containerization**: Docker, Docker Compose (Multistage builds).
+- **IaC**: Terraform (AWS VPC, EKS, RDS).
+- **Configuration**: Ansible (Environment setup).
+- **Orchestration**: Kubernetes (Deployments, Services, Secrets).
+- **CI/CD**: GitHub Actions (Build, Push, Deploy).
+- **Monitoring**: Prometheus (Metrics), Grafana (Visualization).
 
-## Pipeline & Infrastructure Diagram
-
+## 2. Infrastructure & Pipeline Architecture
+### Architecture
 ```mermaid
 graph TD
-    User[Developer] -->|Push| GH[GitHub Repo]
-    GH -->|Trigger| CD[GitHub Actions Pipeline]
-    
-    subgraph "CI/CD Pipeline"
-        CD -->|1. Build| Docker[Docker Build]
-        Docker -->|2. Push| ECR[AWS ECR]
-        CD -->|3. Provision| TF[Terraform Apply]
-        CD -->|4. Deploy| K8s[kubectl apply]
-    end
-    
-    subgraph "AWS Cloud (Terraform Managed)"
-        TF --> VPC
-        TF --> EKS[EKS Cluster]
-        TF --> RDS[RDS Database]
-        
-        EKS -->|Runs| Pods
-        Pods -->|Connects| RDS
-    end
+    User -->|HTTP/LB| K8s[EKS Cluster]
+    K8s -->|Service| Frontend[React App]
+    K8s -->|Service| Backend[Node API]
+    Backend -->|Persist| RDS[AWS RDS Postgres]
+    Backend -->|Cache| Redis[Redis Pod]
+    Backend -->|Persist| Mongo[Mongo Pod]
 ```
 
-## Secret Management Strategy
-Secrets (Database credentials, AWS keys) are managed using **GitHub Actions Secrets**.
-- `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are stored in GitHub Secrets and injected into the pipeline runner.
-- Application secrets (Database URL) are injected into Kubernetes as `Secret` objects during deployment or managed via ExternalSecrets (simulated here with `secrets.yaml` and pipeline injection).
-- No secrets are hardcoded in the codebase source files.
+### CI/CD Pipeline
+1.  **Source**: GitHub Push.
+2.  **Build**: Node.js Install, Lint, Build.
+3.  **Image**: Docker Build -> Push to ECR.
+4.  **Infra**: Terraform Plan.
+5.  **Deploy**: `kubectl apply` to update cluster.
 
-## Monitoring Strategy
-We utilize **Prometheus** for metrics collection and **Grafana** for visualization.
-- The `kube-prometheus-stack` Helm chart is deployed via Terraform.
-- Prometheus scrapes metrics from Kubernetes nodes and pods.
-- Grafana provides dashboards for Cluster resources (CPU/Memory) and Application performance.
+## 3. Secret Management Strategy
+- **Local**: `.env` file (gitignored).
+- **Kubernetes**: `Secret` objects (base64 encoded), injected as Environment Variables.
+- **CI/CD**: GitHub Repository Secrets (`AWS_ACCESS_KEY_ID`, etc.).
 
-## Lessons Learned
-- **Infrastructure as Code**: Managing state complexities with Terraform requires careful planning, especially with EKS dependencies.
-- **Bootstrapping EKS**: Initializing EKS takes time; pipelines must handle timeouts or long-running steps gracefully.
-- **Cost Management**: Using `t3.small` and single-AZ RDS helps keep lab costs down, but production requires redundancy.
+## 4. Monitoring Strategy
+- **Prometheus**: Scrapes metrics from nodes and pods.
+- **Grafana**: Visualizes CPU, Memory, and application health.
+- **Alerting**: (Future) Configure Alertmanager for high error rates.
+
+## 5. Lessons Learned
+- **State Management**: Terraform state requires locking (S3/DynamoDB) for team usage.
+- **Complexity**: EKS setup is complex; managing VPCs and Subnets requires careful planning.
+- **Automation**: CI/CD saves significant time in deployments.

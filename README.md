@@ -1,55 +1,58 @@
-# Lab Final Exam - DevOps Project
+# DevOps Mid Lab Project
 
 ## Overview
-This project demonstrates a full DevOps lifecycle for a web application (Frontend + Backend + DB). It includes containerization, Infrastructure as Code (Terraform), Kubernetes deployment, and a CI/CD pipeline.
+This project is a containerized web application with a corresponding DevOps pipeline. It includes:
+- **Frontend**: React/Vite
+- **Backend**: Node.js/Express
+- **Databases**: MongoDB, PostgreSQL, Redis
 
-## How to Run
+## Prerequisites
+- **Docker & Docker Compose**: [Download Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- **Terraform**: [Download Terraform](https://developer.hashicorp.com/terraform/downloads) (Add to system PATH)
+- **AWS CLI**: [Download AWS CLI](https://aws.amazon.com/cli/)
+- **Ansible**: [Installation Guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (Easier on Linux/WSL)
+- **Kubectl**: [Download Kubectl](https://kubernetes.io/docs/tasks/tools/)
 
-### Locally (Docker Compose)
-To run the application locally for testing:
-1. Ensure Docker is running.
-2. Run:
-   ```bash
-   docker-compose up --build
-   ```
-3. Access Frontend at `http://localhost:5173` (or configured port).
-4. Access Backend at `http://localhost:5000`.
-
-### Kubernetes Deployment
-The application is designed to be deployed on AWS EKS via the CI/CD pipeline, but can be deployed manually:
-1. Configure `kubectl` to point to your cluster.
-2. Apply manifests:
-   ```bash
-   kubectl apply -f k8s/redis.yaml
-   kubectl apply -f k8s/secrets.yaml # Ensure valid secrets
-   kubectl apply -f k8s/backend.yaml
-   kubectl apply -f k8s/frontend.yaml
-   ```
-
-## Infrastructure Setup & Teardown
-
-### Setup
-The infrastructure is provisioned using Terraform:
-1. Navigate to `infra/`:
-   ```bash
-   cd infra
-   ```
-2. Initialize and Apply:
-   ```bash
-   terraform init
-   terraform apply
-   ```
-   This will create the VPC, EKS Cluster, RDS Database, and ECR Repositories.
-
-### Teardown (Important!)
-To avoid AWS costs, destroy resources after use:
+## 1. Run Locally (Docker Compose)
+To spin up the entire stack locally:
 ```bash
-terraform destroy
+# Create .env if not exists
+cp .env.example .env
+
+# Run
+docker-compose up --build
+```
+Access the app at `http://localhost:5000`.
+
+## 2. Infrastructure (Terraform)
+Provision AWS resources (EKS, VPC, RDS):
+```bash
+cd infra
+terraform init
+terraform apply
+```
+*Note: This will incur AWS costs.*
+
+## 3. Configuration (Ansible)
+Setup local environment or servers:
+```bash
+cd ansible
+ansible-playbook -i inventory.ini playbook.yml
 ```
 
-## Architecture
-- **Frontend**: React/Vite (Containerized)
-- **Backend**: Node.js/Express (Containerized)
-- **Database**: AWS RDS (PostgreSQL)
-- **Cache**: Redis (running in K8s)
-- **Infrastructure**: AWS VPC, EKS, RDS, ECR
+## 4. Deployment (Kubernetes)
+Deploy to EKS (or Minikube):
+```bash
+# Apply Manifests
+kubectl apply -f k8s/namespace.yaml
+kubectl apply -f k8s/secrets.yaml
+kubectl apply -f k8s/database.yaml
+kubectl apply -f k8s/redis.yaml
+kubectl apply -f k8s/backend.yaml
+
+# Monitoring
+kubectl apply -f k8s/monitoring/
+```
+
+## 5. CI/CD
+The project uses GitHub Actions defined in `.github/workflows/main.yml`. It automatically builds, tests, and deploys on push to `main`.

@@ -1,0 +1,44 @@
+---
+- name: Configure Development Environment
+  hosts: local
+  gather_facts: yes
+  become: false  # Assuming running on local machine/WSL without root needed for some or asking for pass
+
+  tasks:
+    - name: Check if Docker is installed
+      command: docker --version
+      register: docker_check
+      ignore_errors: yes
+      changed_when: false
+
+    - name: Display Docker version
+      debug:
+        msg: "Docker is installed: {{ docker_check.stdout }}"
+      when: docker_check.rc == 0
+
+    - name: Check if Kubectl is installed
+      command: kubectl version --client
+      register: kubectl_check
+      ignore_errors: yes
+      changed_when: false
+
+    - name: Display Kubectl version
+      debug:
+        msg: "Kubectl is installed: {{ kubectl_check.stdout }}"
+      when: kubectl_check.rc == 0
+
+    - name: Create a local directory for k8s configs
+      file:
+        path: "~/k8s-configs"
+        state: directory
+        mode: '0755'
+
+    - name: Ensure .env exists (demo task)
+      stat:
+        path: "../.env"
+      register: env_file
+
+    - name: Warn if .env missing
+      debug:
+        msg: "WARNING: .env file is missing!"
+      when: not env_file.stat.exists

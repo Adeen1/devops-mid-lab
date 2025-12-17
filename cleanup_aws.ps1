@@ -76,9 +76,44 @@ if ($allVpcs) {
         Write-Host "Deleting VPC: $vpcId"
         aws ec2 delete-vpc --vpc-id $vpcId
     }
+    }
 } else {
-    Write-Host "No VPCs found matching project tags. If 'VpcLimitExceeded' persists, checks AWS Console for untagged VPCs."
-    aws ec2 describe-vpcs --query "Vpcs[*].{ID:VpcId, Tags:Tags}" --no-cli-pager
+    Write-Host "No VPCs found matching project tags. Checks AWS Console for untagged VPCs."
+}
+
+# 5. Security Group Cleanup (Enhanced)
+Write-Host "Checking for lingering Security Groups..."
+$sgIds = aws ec2 describe-security-groups --filters "Name=tag:Name,Values=devops-mid-lab-db-sg,devops-mid-lab-eks-node,devops-mid-lab-eks-cluster" --query "SecurityGroups[*].GroupId" --output text
+
+if ($sgIds -and $sgIds -ne "None") {
+    foreach ($sg in $sgIds.Split("`t")) {
+        if ($sg) {
+            Write-Host "Found SG: $sg. Checking dependencies..."
+            
+            # Find and Delete Network Interfaces using this SG
+            $enis = aws ec2 describe-network-interfaces --filters "Name=group-id,Values=$sg" --query "NetworkInterfaces[*].NetworkInterfaceId" --output text
+            if ($enis -and $enis -ne "None") {
+                 foreach ($eni in $enis.Split("`t")) {
+                     if ($eni) {
+                        Write-Host "Deleting ENI blocking SG: $eni"
+                        aws ec2 delete-network-interface --network-interface-id $eni
+                     }
+                 }
+            }
+
+            Write-Host "Deleting Security Group: $sg"
+            # Retries for eventual consistency
+            for ($i=0; $i -lt 3; $i++) {
+                try {
+                    aws ec2 delete-security-group --group-id $sg
+                    break
+                } catch {
+                    Write-Host "Retry delete SG $sg..."
+                    Start-Sleep -Seconds 5
+                }
+            }
+        }
+    }
 }
 
 Write-Host "Cleanup commands issued."

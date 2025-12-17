@@ -1,10 +1,41 @@
-node_modules
-dist
+# Dependencies
+node_modules/
+
+# Production build
+dist/
+build/
+
+# Environment variables
 .env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# OS generated files
 .DS_Store
-coverage
-.vscode
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Docker volume data (if mapped locally)
+mongo_data/
+postgres_data/
+redis_data/
+
+# Coverage
+coverage/
+
+# Specific files
 qdevaan_accessKeys.csv
 pdf_content.txt
 read_pdf.py
 LabFinalExam-G3.pdf
+infra/.terraform/
