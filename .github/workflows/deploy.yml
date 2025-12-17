@@ -18,11 +18,17 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Install envsubst
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gettext-base
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} # User provided
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }} # Required for Learner Lab
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Setup Terraform
@@ -65,22 +71,18 @@ jobs:
 
       - name: Deploy to K8s
         run: |
-          # Use envsubst to replace placeholders in k8s manifests
-          # Prepare secrets (Assuming DB URL is constructed from Terraform output or hardcoded for lab)
-          # For Lab, we might need to get RDS endpoint from TF output.
-          
-          # Get RDS Endpoint
+          # Ensure namespace exists
+          kubectl create namespace lab-final --dry-run=client -o yaml | kubectl apply -f -
+
+          # Get RDS Endpoint from Terraform output
           cd infra
           RDS_ENDPOINT=$(terraform output -raw db_instance_endpoint)
           cd ..
           
           echo "Deploying with DB: $RDS_ENDPOINT"
           
-          # Create env vars for substitution
-          export REPLACE_WITH_ECR_BE_IMAGE=$BACKEND_IMAGE
-          export REPLACE_WITH_ECR_FE_IMAGE=$FRONTEND_IMAGE
-          
-          # Simple check if secret exists, if not create
+          # Create secret for DB connection
+          # We use --dry-run=client -o yaml | kubectl apply -f - to make it idempotent (safe to re-run)
           kubectl create secret generic app-secrets \
             --namespace lab-final \
             --from-literal=DATABASE_URL="postgres://dbadmin:dbpassword@$RDS_ENDPOINT/labdb" \
@@ -88,6 +90,10 @@ jobs:
             
           # Apply Redis
           kubectl apply -f k8s/redis.yaml
+          
+          # Export env vars for verification and substitution
+          export REPLACE_WITH_ECR_BE_IMAGE=$BACKEND_IMAGE
+          export REPLACE_WITH_ECR_FE_IMAGE=$FRONTEND_IMAGE
           
           # Apply Backend & Frontend with envsubst
           envsubst < k8s/backend.yaml | kubectl apply -f -

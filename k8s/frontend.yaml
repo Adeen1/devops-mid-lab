@@ -16,7 +16,7 @@ spec:
       containers:
       - name: frontend
         # Image will be updated by CI/CD
-        image: REPLACE_WITH_ECR_FE_IMAGE
+        image: $REPLACE_WITH_ECR_FE_IMAGE
         ports:
         - containerPort: 80
         env:

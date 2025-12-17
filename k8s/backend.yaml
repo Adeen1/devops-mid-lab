@@ -16,7 +16,7 @@ spec:
       containers:
       - name: backend
         # Image will be updated by CI/CD
-        image: REPLACE_WITH_ECR_BE_IMAGE
+        image: $REPLACE_WITH_ECR_BE_IMAGE
         ports:
         - containerPort: 5000
         env:
