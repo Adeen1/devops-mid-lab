@@ -34,6 +34,18 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
+      - name: Check for existing VPC
+        id: check_vpc
+        run: |
+          VPC_EXISTS=$(aws ec2 describe-vpcs --filters "Name=tag:Name,Values=lab-exam-vpc" --query "Vpcs[0].VpcId" --output text)
+          if [ "$VPC_EXISTS" != "None" ] && [ -n "$VPC_EXISTS" ]; then
+            echo "VPC found: $VPC_EXISTS. Reuse it."
+            echo "TF_VAR_create_vpc=false" >> $GITHUB_ENV
+          else
+            echo "VPC not found. Create it."
+            echo "TF_VAR_create_vpc=true" >> $GITHUB_ENV
+          fi
+            
       - name: Terraform Init & Apply
         working-directory: infra
         run: |

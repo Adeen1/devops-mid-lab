@@ -5,8 +5,8 @@ module "eks" {
   cluster_name    = "lab-exam-cluster"
   cluster_version = "1.30"
 
-  vpc_id                         = module.vpc.vpc_id
-  subnet_ids                     = module.vpc.public_subnets # Use public subnets to avoid NAT GW requirement
+  vpc_id                         = local.vpc_id
+  subnet_ids                     = local.subnet_ids # Use public subnets to avoid NAT GW requirement
   cluster_endpoint_public_access = true
 
   # Required for v20+ to allow the creator (Terraform) to access the cluster
