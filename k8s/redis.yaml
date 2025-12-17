@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis
-  namespace: lab-final
+  namespace: devops-mid-lab
 spec:
   replicas: 1
   selector:
@@ -18,15 +18,21 @@ spec:
         image: redis:7-alpine
         ports:
         - containerPort: 6379
+        volumeMounts:
+        - name: redis-storage
+          mountPath: /data
+      volumes:
+      - name: redis-storage
+        emptyDir: {}
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: redis
-  namespace: lab-final
+  namespace: devops-mid-lab
 spec:
-  ports:
-  - port: 6379
-    targetPort: 6379
   selector:
     app: redis
+  ports:
+  - port: 6379

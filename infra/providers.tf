@@ -15,15 +15,15 @@ terraform {
       version = "~> 2.16"
     }
   }
-  backend "s3" {
-    bucket = "lab-exam-state-bucket" # CHANGE THIS to a unique bucket name you create manually
-    key    = "terraform.tfstate"
-    region = "us-east-1"
-  }
+  # backend "s3" {
+  #   bucket = "lab-exam-state-bucket" # CHANGE THIS to a unique bucket name you create manually
+  #   key    = "terraform.tfstate"
+  #   region = "us-east-1"
+  # }
 }
 
 provider "aws" {
-  region = "us-east-1" # Can be changed or made a variable
+  region = var.region
 }
 
 provider "kubernetes" {

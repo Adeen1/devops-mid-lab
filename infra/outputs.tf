@@ -10,7 +10,7 @@ output "cluster_security_group_id" {
 
 output "region" {
   description = "AWS region"
-  value       = "us-east-1"
+  value       = var.region
 }
 
 output "cluster_name" {
@@ -18,7 +18,7 @@ output "cluster_name" {
   value       = module.eks.cluster_name
 }
 
-output "db_instance_endpoint" {
-  description = "The connection endpoint"
+output "rds_endpoint" {
+  description = "RDS Endpoint"
   value       = module.db.db_instance_endpoint
 }
