@@ -68,8 +68,9 @@ jobs:
                Write-Host "Cleanup done. Terraform will create a new VPC."
                "TF_VAR_create_vpc=true" | Out-File -FilePath $env:GITHUB_ENV -Append
             } else {
-               Write-Host "VPC is valid. Reuse it."
-               "TF_VAR_create_vpc=false" | Out-File -FilePath $env:GITHUB_ENV -Append
+               Write-Host "VPC is valid and ready. Proceeding with Terraform (State Check)."
+               # Do NOT set TF_VAR_create_vpc=false here. 
+               # Defaults to true, allowing Terraform to verify state and skip creation if matches.
             }
           } else {
             Write-Host "VPC not found. Create it."
