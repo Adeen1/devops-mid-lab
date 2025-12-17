@@ -32,3 +32,9 @@ redis_data/
 
 # Coverage
 coverage/
+
+# Specific files
+qdevaan_accessKeys.csv
+pdf_content.txt
+read_pdf.py
+LabFinalExam-G3.pdf

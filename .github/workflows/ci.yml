@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  backend-tests:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: be
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: be/package-lock.json
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Lint (ESLint)
+        run: npx eslint .
+
+      - name: Run tests
+        run: npm test -- --ci --reporters=default --colors
+
+  frontend-build:
+    name: Frontend Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: fe
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: fe/package-lock.json
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Lint (ESLint)
+        run: npx eslint .
+
+      - name: Build
+        run: npm run build:prod
