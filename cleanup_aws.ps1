@@ -1,4 +1,5 @@
 $ErrorActionPreference = "SilentlyContinue"
+$env:AWS_PAGER="" # Disable pager to avoid 'cat' errors on Windows
 
 Write-Host "Cleaning up orphaned resources..."
 
@@ -6,6 +7,20 @@ Write-Host "Cleaning up orphaned resources..."
 Write-Host "Deleting ECR repositories..."
 aws ecr delete-repository --repository-name lab-exam-backend --force
 aws ecr delete-repository --repository-name lab-exam-frontend --force
+
+# 1.5 Delete EKS Node Groups
+Write-Host "Checking for EKS Node Groups..."
+$nodeGroups = aws eks list-nodegroups --cluster-name lab-exam-cluster --query "nodegroups" --output text
+if ($nodeGroups -and $nodeGroups -ne "None") {
+    foreach ($ng in $nodeGroups.Split("`t")) {
+        if ($ng -and $ng -ne "") {
+             Write-Host "Deleting Node Group: $ng"
+             aws eks delete-nodegroup --cluster-name lab-exam-cluster --nodegroup-name $ng
+             Write-Host "Waiting for Node Group $ng to be deleted (this takes time)..."
+             aws eks wait nodegroup-deleted --cluster-name lab-exam-cluster --nodegroup-name $ng
+        }
+    }
+}
 
 # 2. Delete EKS Cluster
 Write-Host "Deleting EKS Cluster (if exists)..."

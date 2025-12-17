@@ -4,6 +4,12 @@ on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
+    inputs:
+      run_cleanup:
+        description: 'Run cleanup script before deployment?'
+        required: false
+        type: boolean
+        default: false
 
 env:
   AWS_REGION: us-east-1
@@ -30,6 +36,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }} # Required for Learner Lab
           aws-region: ${{ env.AWS_REGION }}
+
+      - name: Run Cleanup Script
+        if: ${{ github.event.inputs.run_cleanup == 'true' }}
+        shell: pwsh
+        run: ./cleanup_aws.ps1
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
