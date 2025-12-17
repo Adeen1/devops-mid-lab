@@ -7,7 +7,7 @@ variable "region" {
 variable "cluster_name" {
   description = "Name of the EKS cluster"
   type        = string
-  default     = "devops-mid-lab-cluster"
+  default     = "adeen-devops"
 }
 
 variable "vpc_cidr" {

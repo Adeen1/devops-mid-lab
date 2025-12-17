@@ -1,0 +1,657 @@
+[0m[1mdata.aws_eks_cluster_auth.cluster: Reading...[0m[0m
+[0m[1mmodule.db.module.db_instance.data.aws_iam_policy_document.enhanced_monitoring: Reading...[0m[0m
+[0m[1mmodule.eks.aws_cloudwatch_log_group.this[0]: Refreshing state... [id=/aws/eks/adeen-devops/cluster][0m
+[0m[1mmodule.eks.data.aws_partition.current[0]: Reading...[0m[0m
+[0m[1mmodule.db.module.db_parameter_group.aws_db_parameter_group.this[0]: Refreshing state... [id=devops-mid-lab-db-20251217212019546300000001][0m
+[0m[1maws_ecr_repository.backend: Refreshing state... [id=lab-exam-backend][0m
+[0m[1mmodule.vpc.aws_vpc.this[0]: Refreshing state... [id=vpc-0f74e78d682331ab2][0m
+[0m[1mmodule.eks.module.eks_managed_node_group["green"].data.aws_caller_identity.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.kms.data.aws_caller_identity.current[0]: Reading...[0m[0m
+[0m[1mmodule.db.module.db_instance.data.aws_partition.current: Reading...[0m[0m
+[0m[1mdata.aws_eks_cluster_auth.cluster: Read complete after 0s [id=adeen-devops][0m
+[0m[1mmodule.db.module.db_instance.data.aws_iam_policy_document.enhanced_monitoring: Read complete after 0s [id=76086537][0m
+[0m[1mmodule.eks.data.aws_partition.current[0]: Read complete after 0s [id=aws][0m
+[0m[1mmodule.db.module.db_instance.data.aws_partition.current: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.module.kms.data.aws_partition.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_managed_node_group["green"].data.aws_partition.current: Reading...[0m[0m
+[0m[1mmodule.eks.data.aws_caller_identity.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.aws_iam_role.this[0]: Refreshing state... [id=adeen-devops-cluster-20251217212019548300000002][0m
+[0m[1mmodule.eks.module.eks_managed_node_group["green"].data.aws_partition.current: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.module.kms.data.aws_partition.current[0]: Read complete after 0s [id=aws][0m
+[0m[1maws_ecr_repository.frontend: Refreshing state... [id=lab-exam-frontend][0m
+[0m[1mmodule.eks.module.eks_managed_node_group["green"].data.aws_iam_policy_document.assume_role_policy[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_managed_node_group["green"].data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2560088296][0m
+[0m[1mdata.aws_eks_cluster.cluster: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks_managed_node_group["green"].data.aws_caller_identity.current: Read complete after 1s [id=184437145027][0m
+[0m[1mmodule.eks.module.eks_managed_node_group["green"].aws_iam_role.this[0]: Refreshing state... [id=green-eks-node-group-20251217212019548800000003][0m
+[0m[1mmodule.eks.module.kms.data.aws_caller_identity.current[0]: Read complete after 1s [id=184437145027][0m
+[0m[1mmodule.eks.aws_iam_policy.custom[0]: Refreshing state... [id=arn:aws:iam::184437145027:policy/adeen-devops-cluster-20251217212019548800000004][0m
+[0m[1mmodule.eks.data.aws_caller_identity.current[0]: Read complete after 1s [id=184437145027][0m
+[0m[1mmodule.eks.data.aws_iam_session_context.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.data.aws_iam_session_context.current[0]: Read complete after 0s [id=arn:aws:iam::184437145027:user/DevOps_Lab][0m
+[0m[1mdata.aws_eks_cluster.cluster: Read complete after 1s [id=adeen-devops][0m
+[0m[1mhelm_release.kube-prometheus-stack: Refreshing state... [id=prometheus-stack][0m
+[0m[1mmodule.eks.aws_iam_role_policy_attachment.custom[0]: Refreshing state... [id=adeen-devops-cluster-20251217212019548300000002-2025121721202293410000000a][0m
+[0m[1mmodule.eks.module.eks_managed_node_group["green"].aws_iam_role_policy_attachment.this["AmazonEKSWorkerNodePolicy"]: Refreshing state... [id=green-eks-node-group-20251217212019548800000003-20251217212022583600000006][0m
+[0m[1mmodule.eks.aws_iam_role_policy_attachment.this["AmazonEKSVPCResourceController"]: Refreshing state... [id=adeen-devops-cluster-20251217212019548300000002-20251217212022847600000008][0m
+[0m[1mmodule.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"]: Refreshing state... [id=adeen-devops-cluster-20251217212019548300000002-20251217212022870800000009][0m
+[0m[1mmodule.eks.module.eks_managed_node_group["green"].aws_iam_role_policy_attachment.this["AmazonEC2ContainerRegistryReadOnly"]: Refreshing state... [id=green-eks-node-group-20251217212019548800000003-20251217212022566500000005][0m
+[0m[1mmodule.eks.module.eks_managed_node_group["green"].aws_iam_role_policy_attachment.this["AmazonEKS_CNI_Policy"]: Refreshing state... [id=green-eks-node-group-20251217212019548800000003-20251217212022602000000007][0m
+[0m[1mmodule.eks.module.kms.data.aws_iam_policy_document.this[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.kms.data.aws_iam_policy_document.this[0]: Read complete after 0s [id=1213480878][0m
+[0m[1mmodule.eks.module.kms.aws_kms_key.this[0]: Refreshing state... [id=744d2d80-774b-4de4-8935-904663c31764][0m
+[0m[1mmodule.vpc.aws_default_security_group.this[0]: Refreshing state... [id=sg-0aedf51aa91cb282b][0m
+[0m[1mmodule.vpc.aws_default_route_table.default[0]: Refreshing state... [id=rtb-083c84be4e5d83e8d][0m
+[0m[1mmodule.security_group.aws_security_group.this_name_prefix[0]: Refreshing state... [id=sg-0d4eda954178d6162][0m
+[0m[1mmodule.vpc.aws_default_network_acl.this[0]: Refreshing state... [id=acl-0d04a4d00134353e2][0m
+[0m[1mmodule.vpc.aws_internet_gateway.this[0]: Refreshing state... [id=igw-0143e5b18dfdd7a1a][0m
+[0m[1mmodule.vpc.aws_subnet.private[1]: Refreshing state... [id=subnet-058f8e97354ed4878][0m
+[0m[1mmodule.vpc.aws_subnet.private[0]: Refreshing state... [id=subnet-0ab0004610945952b][0m
+[0m[1mmodule.vpc.aws_route_table.public[0]: Refreshing state... [id=rtb-0d857e080112c112e][0m
+[0m[1mmodule.eks.aws_security_group.node[0]: Refreshing state... [id=sg-08f01d2135802facb][0m
+[0m[1mmodule.vpc.aws_route_table.private[0]: Refreshing state... [id=rtb-0e22a5998dc3afcbc][0m
+[0m[1mmodule.vpc.aws_subnet.public[0]: Refreshing state... [id=subnet-0816a61d09b648432][0m
+[0m[1mmodule.vpc.aws_subnet.public[1]: Refreshing state... [id=subnet-05f9ebbba7d6980db][0m
+[0m[1mmodule.eks.aws_security_group.cluster[0]: Refreshing state... [id=sg-0673866723bf8cd7b][0m
+[0m[1mmodule.eks.module.kms.aws_kms_alias.this["cluster"]: Refreshing state... [id=alias/eks/adeen-devops][0m
+[0m[1mmodule.vpc.aws_eip.nat[0]: Refreshing state... [id=eipalloc-0d89cf82e9eb2cffd][0m
+[0m[1mmodule.eks.aws_iam_policy.cluster_encryption[0]: Refreshing state... [id=arn:aws:iam::184437145027:policy/adeen-devops-cluster-ClusterEncryption20251217212048094100000012][0m
+[0m[1mmodule.vpc.aws_route_table_association.private[0]: Refreshing state... [id=rtbassoc-0483f63f37d1f4379][0m
+[0m[1mmodule.vpc.aws_route_table_association.private[1]: Refreshing state... [id=rtbassoc-01511581e0e129d35][0m
+[0m[1mmodule.vpc.aws_route.public_internet_gateway[0]: Refreshing state... [id=r-rtb-0d857e080112c112e1080289494][0m
+[0m[1mmodule.security_group.aws_security_group_rule.ingress_with_cidr_blocks[0]: Refreshing state... [id=sgrule-134476849][0m
+[0m[1mmodule.vpc.aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-0eab712fb7c29edcc][0m
+[0m[1mmodule.vpc.aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-0bbeb8ef6fc9a6d53][0m
+[0m[1mmodule.eks.aws_security_group_rule.cluster["ingress_nodes_443"]: Refreshing state... [id=sgrule-2110733365][0m
+[0m[1mmodule.db.module.db_subnet_group.aws_db_subnet_group.this[0]: Refreshing state... [id=devops-mid-lab-db-20251217212039024700000010][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_cluster_kubelet"]: Refreshing state... [id=sgrule-2201899084][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["egress_all"]: Refreshing state... [id=sgrule-1844630623][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"]: Refreshing state... [id=sgrule-3368338431][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_cluster_443"]: Refreshing state... [id=sgrule-1781985384][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"]: Refreshing state... [id=sgrule-3329834815][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"]: Refreshing state... [id=sgrule-3730771071][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_cluster_6443_webhook"]: Refreshing state... [id=sgrule-255547561][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_self_coredns_udp"]: Refreshing state... [id=sgrule-2046865296][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_cluster_9443_webhook"]: Refreshing state... [id=sgrule-2026264387][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"]: Refreshing state... [id=sgrule-476537992][0m
+[0m[1mmodule.eks.aws_iam_role_policy_attachment.cluster_encryption[0]: Refreshing state... [id=adeen-devops-cluster-20251217212019548300000002-20251217212049258600000013][0m
+[0m[1mmodule.vpc.aws_nat_gateway.this[0]: Refreshing state... [id=nat-09db2ce854f2354f8][0m
+[0m[1mmodule.db.module.db_instance.aws_db_instance.this[0]: Refreshing state... [id=db-HK6VC32EDYEV6FXGJBNYGCATMQ][0m
+[0m[1mmodule.vpc.aws_route.private_nat_gateway[0]: Refreshing state... [id=r-rtb-0e22a5998dc3afcbc1080289494][0m
+[0m[1mmodule.eks.aws_eks_cluster.this[0]: Refreshing state... [id=adeen-devops][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [32m+[0m create[0m
+  [33m~[0m update in-place[0m
+  [31m-[0m destroy[0m
+ [36m<=[0m read (data resources)[0m
+
+Terraform will perform the following actions:
+
+[1m  # module.eks.data.tls_certificate.this[0][0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "tls_certificate" "this" {
+      [32m+[0m[0m certificates = (known after apply)
+      [32m+[0m[0m id           = (known after apply)
+      [32m+[0m[0m url          = "https://oidc.eks.us-east-1.amazonaws.com/id/B8DDF6F51E58DCC3BB7B325F1204198B"
+    }
+
+[1m  # module.eks.aws_ec2_tag.cluster_primary_security_group["Environment"][0m will be created
+[0m  [32m+[0m[0m resource "aws_ec2_tag" "cluster_primary_security_group" {
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m key         = "Environment"
+      [32m+[0m[0m resource_id = "sg-01edb89f0be60ffca"
+      [32m+[0m[0m value       = "dev"
+    }
+
+[1m  # module.eks.aws_ec2_tag.cluster_primary_security_group["Terraform"][0m will be created
+[0m  [32m+[0m[0m resource "aws_ec2_tag" "cluster_primary_security_group" {
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m key         = "Terraform"
+      [32m+[0m[0m resource_id = "sg-01edb89f0be60ffca"
+      [32m+[0m[0m value       = "true"
+    }
+
+[1m  # module.eks.aws_eks_access_entry.this["cluster_creator"][0m will be created
+[0m  [32m+[0m[0m resource "aws_eks_access_entry" "this" {
+      [32m+[0m[0m access_entry_arn  = (known after apply)
+      [32m+[0m[0m cluster_name      = "adeen-devops"
+      [32m+[0m[0m created_at        = (known after apply)
+      [32m+[0m[0m id                = (known after apply)
+      [32m+[0m[0m kubernetes_groups = (known after apply)
+      [32m+[0m[0m modified_at       = (known after apply)
+      [32m+[0m[0m principal_arn     = "arn:aws:iam::184437145027:user/DevOps_Lab"
+      [32m+[0m[0m tags              = {
+          [32m+[0m[0m "Environment" = "dev"
+          [32m+[0m[0m "Terraform"   = "true"
+        }
+      [32m+[0m[0m tags_all          = {
+          [32m+[0m[0m "Environment" = "dev"
+          [32m+[0m[0m "Terraform"   = "true"
+        }
+      [32m+[0m[0m type              = "STANDARD"
+      [32m+[0m[0m user_name         = (known after apply)
+    }
+
+[1m  # module.eks.aws_eks_access_policy_association.this["cluster_creator_admin"][0m will be created
+[0m  [32m+[0m[0m resource "aws_eks_access_policy_association" "this" {
+      [32m+[0m[0m associated_at = (known after apply)
+      [32m+[0m[0m cluster_name  = "adeen-devops"
+      [32m+[0m[0m id            = (known after apply)
+      [32m+[0m[0m modified_at   = (known after apply)
+      [32m+[0m[0m policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+      [32m+[0m[0m principal_arn = "arn:aws:iam::184437145027:user/DevOps_Lab"
+
+      [32m+[0m[0m access_scope {
+          [32m+[0m[0m type = "cluster"
+        }
+    }
+
+[1m  # module.eks.aws_eks_cluster.this[0][0m will be updated in-place
+[0m  [33m~[0m[0m resource "aws_eks_cluster" "this" {
+      [33m~[0m[0m enabled_cluster_log_types     = [
+          [31m-[0m[0m "controllerManager",
+          [31m-[0m[0m "scheduler",
+            [90m# (3 unchanged elements hidden)[0m[0m
+        ]
+        id                            = "adeen-devops"
+        name                          = "adeen-devops"
+      [33m~[0m[0m tags                          = {
+            "Environment"           = "dev"
+          [31m-[0m[0m "Name"                  = "adeen-devops" [90m-> null[0m[0m
+          [31m-[0m[0m "Project"               = "rouse-restaurant" [90m-> null[0m[0m
+          [32m+[0m[0m "Terraform"             = "true"
+          [32m+[0m[0m "terraform-aws-modules" = "eks"
+        }
+      [33m~[0m[0m tags_all                      = {
+          [31m-[0m[0m "Name"                  = "adeen-devops" [90m-> null[0m[0m
+          [31m-[0m[0m "Project"               = "rouse-restaurant" [90m-> null[0m[0m
+          [32m+[0m[0m "Terraform"             = "true"
+          [32m+[0m[0m "terraform-aws-modules" = "eks"
+            [90m# (1 unchanged element hidden)[0m[0m
+        }
+        [90m# (10 unchanged attributes hidden)[0m[0m
+
+      [33m~[0m[0m access_config {
+          [33m~[0m[0m authentication_mode                         = "CONFIG_MAP" [33m->[0m[0m "API_AND_CONFIG_MAP"
+            [90m# (1 unchanged attribute hidden)[0m[0m
+        }
+
+      [32m+[0m[0m encryption_config {
+          [32m+[0m[0m resources = [
+              [32m+[0m[0m "secrets",
+            ]
+
+          [32m+[0m[0m provider {
+              [32m+[0m[0m key_arn = "arn:aws:kms:us-east-1:184437145027:key/744d2d80-774b-4de4-8935-904663c31764"
+            }
+        }
+
+      [32m+[0m[0m timeouts {}
+
+      [33m~[0m[0m vpc_config {
+          [33m~[0m[0m security_group_ids        = [
+              [31m-[0m[0m "sg-01d603bcd8b44c740",
+              [32m+[0m[0m "sg-0673866723bf8cd7b",
+            ]
+          [33m~[0m[0m subnet_ids                = [
+              [31m-[0m[0m "subnet-046f521a692d9466a",
+              [31m-[0m[0m "subnet-06527b5659d9f97b9",
+              [31m-[0m[0m "subnet-07b9eaff9e11bb212",
+              [31m-[0m[0m "subnet-081e2614c89959903",
+              [32m+[0m[0m "subnet-058f8e97354ed4878",
+              [32m+[0m[0m "subnet-0ab0004610945952b",
+            ]
+            [90m# (5 unchanged attributes hidden)[0m[0m
+        }
+
+        [90m# (2 unchanged blocks hidden)[0m[0m
+    }
+
+[1m  # module.eks.aws_iam_openid_connect_provider.oidc_provider[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_openid_connect_provider" "oidc_provider" {
+      [32m+[0m[0m arn             = (known after apply)
+      [32m+[0m[0m client_id_list  = [
+          [32m+[0m[0m "sts.amazonaws.com",
+        ]
+      [32m+[0m[0m id              = (known after apply)
+      [32m+[0m[0m tags            = {
+          [32m+[0m[0m "Environment" = "dev"
+          [32m+[0m[0m "Name"        = "adeen-devops-eks-irsa"
+          [32m+[0m[0m "Terraform"   = "true"
+        }
+      [32m+[0m[0m tags_all        = {
+          [32m+[0m[0m "Environment" = "dev"
+          [32m+[0m[0m "Name"        = "adeen-devops-eks-irsa"
+          [32m+[0m[0m "Terraform"   = "true"
+        }
+      [32m+[0m[0m thumbprint_list = (known after apply)
+      [32m+[0m[0m url             = "https://oidc.eks.us-east-1.amazonaws.com/id/B8DDF6F51E58DCC3BB7B325F1204198B"
+    }
+
+[1m  # module.eks.aws_iam_policy.cluster_encryption[0][0m will be [1m[31mdestroyed[0m
+  # (because index [0] is out of range for count)
+[0m  [31m-[0m[0m resource "aws_iam_policy" "cluster_encryption" {
+      [31m-[0m[0m arn              = "arn:aws:iam::184437145027:policy/adeen-devops-cluster-ClusterEncryption20251217212048094100000012" [90m-> null[0m[0m
+      [31m-[0m[0m attachment_count = 1 [90m-> null[0m[0m
+      [31m-[0m[0m description      = "Cluster encryption policy to allow cluster role to utilize CMK provided" [90m-> null[0m[0m
+      [31m-[0m[0m id               = "arn:aws:iam::184437145027:policy/adeen-devops-cluster-ClusterEncryption20251217212048094100000012" [90m-> null[0m[0m
+      [31m-[0m[0m name             = "adeen-devops-cluster-ClusterEncryption20251217212048094100000012" [90m-> null[0m[0m
+      [31m-[0m[0m name_prefix      = "adeen-devops-cluster-ClusterEncryption" [90m-> null[0m[0m
+      [31m-[0m[0m path             = "/" [90m-> null[0m[0m
+      [31m-[0m[0m policy           = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "kms:Encrypt",
+                          [31m-[0m[0m "kms:Decrypt",
+                          [31m-[0m[0m "kms:ListGrants",
+                          [31m-[0m[0m "kms:DescribeKey",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "arn:aws:kms:us-east-1:184437145027:key/744d2d80-774b-4de4-8935-904663c31764"
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m policy_id        = "ANPASV4KPPXBYADSJGE4R" [90m-> null[0m[0m
+      [31m-[0m[0m tags             = {
+          [31m-[0m[0m "Environment" = "dev"
+          [31m-[0m[0m "Terraform"   = "true"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m tags_all         = {
+          [31m-[0m[0m "Environment" = "dev"
+          [31m-[0m[0m "Terraform"   = "true"
+        } [90m-> null[0m[0m
+    }
+
+[1m  # module.eks.aws_iam_policy.custom[0][0m will be [1m[31mdestroyed[0m
+  # (because index [0] is out of range for count)
+[0m  [31m-[0m[0m resource "aws_iam_policy" "custom" {
+      [31m-[0m[0m arn              = "arn:aws:iam::184437145027:policy/adeen-devops-cluster-20251217212019548800000004" [90m-> null[0m[0m
+      [31m-[0m[0m attachment_count = 1 [90m-> null[0m[0m
+      [31m-[0m[0m id               = "arn:aws:iam::184437145027:policy/adeen-devops-cluster-20251217212019548800000004" [90m-> null[0m[0m
+      [31m-[0m[0m name             = "adeen-devops-cluster-20251217212019548800000004" [90m-> null[0m[0m
+      [31m-[0m[0m name_prefix      = "adeen-devops-cluster-" [90m-> null[0m[0m
+      [31m-[0m[0m path             = "/" [90m-> null[0m[0m
+      [31m-[0m[0m policy           = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = [
+                          [31m-[0m[0m "ec2:RunInstances",
+                          [31m-[0m[0m "ec2:CreateLaunchTemplate",
+                          [31m-[0m[0m "ec2:CreateFleet",
+                        ]
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringEquals = {
+                              [31m-[0m[0m "aws:RequestTag/eks:eks-cluster-name" = "${aws:PrincipalTag/eks:eks-cluster-name}"
+                            }
+                          [31m-[0m[0m StringLike   = {
+                              [31m-[0m[0m "aws:RequestTag/eks:kubernetes-node-class-name" = "*"
+                              [31m-[0m[0m "aws:RequestTag/eks:kubernetes-node-pool-name"  = "*"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "*"
+                      [31m-[0m[0m Sid       = "Compute"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = [
+                          [31m-[0m[0m "ec2:CreateVolume",
+                          [31m-[0m[0m "ec2:CreateSnapshot",
+                        ]
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringEquals = {
+                              [31m-[0m[0m "aws:RequestTag/eks:eks-cluster-name" = "${aws:PrincipalTag/eks:eks-cluster-name}"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = [
+                          [31m-[0m[0m "arn:aws:ec2:*:*:volume/*",
+                          [31m-[0m[0m "arn:aws:ec2:*:*:snapshot/*",
+                        ]
+                      [31m-[0m[0m Sid       = "Storage"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "ec2:CreateNetworkInterface"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringEquals = {
+                              [31m-[0m[0m "aws:RequestTag/eks:eks-cluster-name"         = "${aws:PrincipalTag/eks:eks-cluster-name}"
+                              [31m-[0m[0m "aws:RequestTag/eks:kubernetes-cni-node-name" = "*"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "*"
+                      [31m-[0m[0m Sid       = "Networking"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = [
+                          [31m-[0m[0m "elasticloadbalancing:CreateTargetGroup",
+                          [31m-[0m[0m "elasticloadbalancing:CreateRule",
+                          [31m-[0m[0m "elasticloadbalancing:CreateLoadBalancer",
+                          [31m-[0m[0m "elasticloadbalancing:CreateListener",
+                          [31m-[0m[0m "ec2:CreateSecurityGroup",
+                        ]
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringEquals = {
+                              [31m-[0m[0m "aws:RequestTag/eks:eks-cluster-name" = "${aws:PrincipalTag/eks:eks-cluster-name}"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "*"
+                      [31m-[0m[0m Sid       = "LoadBalancer"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "shield:CreateProtection"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringEquals = {
+                              [31m-[0m[0m "aws:RequestTag/eks:eks-cluster-name" = "${aws:PrincipalTag/eks:eks-cluster-name}"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "*"
+                      [31m-[0m[0m Sid       = "ShieldProtection"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "shield:TagResource"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringEquals = {
+                              [31m-[0m[0m "aws:RequestTag/eks:eks-cluster-name" = "${aws:PrincipalTag/eks:eks-cluster-name}"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "arn:aws:shield::*:protection/*"
+                      [31m-[0m[0m Sid       = "ShieldTagResource"
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m policy_id        = "ANPASV4KPPXBVJ5VNGFH5" [90m-> null[0m[0m
+      [31m-[0m[0m tags             = {
+          [31m-[0m[0m "Environment" = "dev"
+          [31m-[0m[0m "Terraform"   = "true"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m tags_all         = {
+          [31m-[0m[0m "Environment" = "dev"
+          [31m-[0m[0m "Terraform"   = "true"
+        } [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+
+[1m  # module.eks.aws_iam_role.this[0][0m will be [1m[31mdestroyed[0m
+  # (because index [0] is out of range for count)
+[0m  [31m-[0m[0m resource "aws_iam_role" "this" {
+      [31m-[0m[0m arn                   = "arn:aws:iam::184437145027:role/adeen-devops-cluster-20251217212019548300000002" [90m-> null[0m[0m
+      [31m-[0m[0m assume_role_policy    = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = [
+                          [31m-[0m[0m "sts:TagSession",
+                          [31m-[0m[0m "sts:AssumeRole",
+                        ]
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Principal = {
+                          [31m-[0m[0m Service = "eks.amazonaws.com"
+                        }
+                      [31m-[0m[0m Sid       = "EKSClusterAssumeRole"
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m create_date           = "2025-12-17T21:20:21Z" [90m-> null[0m[0m
+      [31m-[0m[0m force_detach_policies = true [90m-> null[0m[0m
+      [31m-[0m[0m id                    = "adeen-devops-cluster-20251217212019548300000002" [90m-> null[0m[0m
+      [31m-[0m[0m managed_policy_arns   = [
+          [31m-[0m[0m "arn:aws:iam::184437145027:policy/adeen-devops-cluster-20251217212019548800000004",
+          [31m-[0m[0m "arn:aws:iam::184437145027:policy/adeen-devops-cluster-ClusterEncryption20251217212048094100000012",
+          [31m-[0m[0m "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+          [31m-[0m[0m "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m max_session_duration  = 3600 [90m-> null[0m[0m
+      [31m-[0m[0m name                  = "adeen-devops-cluster-20251217212019548300000002" [90m-> null[0m[0m
+      [31m-[0m[0m name_prefix           = "adeen-devops-cluster-" [90m-> null[0m[0m
+      [31m-[0m[0m path                  = "/" [90m-> null[0m[0m
+      [31m-[0m[0m tags                  = {
+          [31m-[0m[0m "Environment" = "dev"
+          [31m-[0m[0m "Terraform"   = "true"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m tags_all              = {
+          [31m-[0m[0m "Environment" = "dev"
+          [31m-[0m[0m "Terraform"   = "true"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m unique_id             = "AROASV4KPPXB7DVERX4FY" [90m-> null[0m[0m
+        [90m# (2 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.eks.aws_iam_role_policy_attachment.cluster_encryption[0][0m will be [1m[31mdestroyed[0m
+  # (because index [0] is out of range for count)
+[0m  [31m-[0m[0m resource "aws_iam_role_policy_attachment" "cluster_encryption" {
+      [31m-[0m[0m id         = "adeen-devops-cluster-20251217212019548300000002-20251217212049258600000013" [90m-> null[0m[0m
+      [31m-[0m[0m policy_arn = "arn:aws:iam::184437145027:policy/adeen-devops-cluster-ClusterEncryption20251217212048094100000012" [90m-> null[0m[0m
+      [31m-[0m[0m role       = "adeen-devops-cluster-20251217212019548300000002" [90m-> null[0m[0m
+    }
+
+[1m  # module.eks.aws_iam_role_policy_attachment.custom[0][0m will be [1m[31mdestroyed[0m
+  # (because index [0] is out of range for count)
+[0m  [31m-[0m[0m resource "aws_iam_role_policy_attachment" "custom" {
+      [31m-[0m[0m id         = "adeen-devops-cluster-20251217212019548300000002-2025121721202293410000000a" [90m-> null[0m[0m
+      [31m-[0m[0m policy_arn = "arn:aws:iam::184437145027:policy/adeen-devops-cluster-20251217212019548800000004" [90m-> null[0m[0m
+      [31m-[0m[0m role       = "adeen-devops-cluster-20251217212019548300000002" [90m-> null[0m[0m
+    }
+
+[1m  # module.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"][0m will be [1m[31mdestroyed[0m
+  # (because key ["AmazonEKSClusterPolicy"] is not in for_each map)
+[0m  [31m-[0m[0m resource "aws_iam_role_policy_attachment" "this" {
+      [31m-[0m[0m id         = "adeen-devops-cluster-20251217212019548300000002-20251217212022870800000009" [90m-> null[0m[0m
+      [31m-[0m[0m policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy" [90m-> null[0m[0m
+      [31m-[0m[0m role       = "adeen-devops-cluster-20251217212019548300000002" [90m-> null[0m[0m
+    }
+
+[1m  # module.eks.aws_iam_role_policy_attachment.this["AmazonEKSVPCResourceController"][0m will be [1m[31mdestroyed[0m
+  # (because key ["AmazonEKSVPCResourceController"] is not in for_each map)
+[0m  [31m-[0m[0m resource "aws_iam_role_policy_attachment" "this" {
+      [31m-[0m[0m id         = "adeen-devops-cluster-20251217212019548300000002-20251217212022847600000008" [90m-> null[0m[0m
+      [31m-[0m[0m policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController" [90m-> null[0m[0m
+      [31m-[0m[0m role       = "adeen-devops-cluster-20251217212019548300000002" [90m-> null[0m[0m
+    }
+
+[1m  # module.eks.time_sleep.this[0][0m will be created
+[0m  [32m+[0m[0m resource "time_sleep" "this" {
+      [32m+[0m[0m create_duration = "30s"
+      [32m+[0m[0m id              = (known after apply)
+      [32m+[0m[0m triggers        = {
+          [32m+[0m[0m "cluster_certificate_authority_data" = "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJQmF3ZnRoaUpXZjh3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TlRFeU1UY3hOelF3TlRoYUZ3MHpOVEV5TVRVeE56UTFOVGhhTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUURmY0orUFJJZS9ERCtLY0VWWHA1djNwMVFkdURyRjcvcDNDRXJWcXdLSWJWZVNyZ1VhNWd4djlYcnkKbDFwLzVUMFUvd2tPNlYyU3BNVEhQTFFHT0x6ZkNOVmhGdWdEeFBSY3ZlU0lDSzVxTzUrVnlzRHJzcmFDM0VPTgozaG1kd0ZSd0lnMC9BcmxLeVBzbGYwSmpFTGFMZ2pxbnpvYUhDVk9wditvczdaL3RvTkY4bC9SemxVbzFnRGZkClNRWGdQOC9hMUtJTDZEbWxJV3lFUUZwMjBFQk9RQjdkK2xWcm5ZUFlSTE8wK0FvL09oa0JLZ0JwNjBFc2J2Q3UKWEtFbVgra1NnVmFTNWpqamh6enI5czRDdGZMVHFWTVVITmFocFY5TitveWNubVdCYzRtY3l3eHFRNDR6OE9TMApMYVlVWTdyRFlyMGNwSWFrVUpWcUU0REg1Q1hQQWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJUK0ZCVjhIQUlPcExuaEozc3VXaFd6TFVOL3NUQVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQWloN1gxTGN4Kwp5TnpTRzkvZnZ6VllCVGFocGYveXRzZnZuT25uaXdTRVRzYWtnSjhQZ3NHR2tpcUppaHhRMXlzTnRka3puUDBWCmVscnFocld2VDkwWDhSNVI1KzZtNEJqOTUyTDQwVzZEbHZSanRrTTFxN1dOTUQ5K3gzZ1RONTRmS2Uwdk96RjgKd2JndUUyTUhFUFpJL1RNZ0xQWHlSZE5vSG8walZoSUd0N1krNXVQdGdEUTVDUUhUcjBVZklJenBFS0ptUktSKwpUTks4STVKNGhtajg2WjlvTnBKamNiVXlZeTVjNlpHTjBqL1Q5WlN4WEtxem9kVkx1M2FOR3N1QTlOaE1rcFVXCkR6eUVxZ3lGODZOREJBcDFuMXZLVTNGclQrNXRPMVBUcjRtVGl4V3h4ZjBmTjN0cGlvVk5Bd3ZmczlJNStqYVUKZEptTmtVU2F0ZU5SCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+          [32m+[0m[0m "cluster_endpoint"                   = "https://B8DDF6F51E58DCC3BB7B325F1204198B.gr7.us-east-1.eks.amazonaws.com"
+          [32m+[0m[0m "cluster_name"                       = "adeen-devops"
+          [32m+[0m[0m "cluster_service_cidr"               = "172.20.0.0/16"
+          [32m+[0m[0m "cluster_version"                    = "1.29"
+        }
+    }
+
+[1m  # module.eks.module.eks_managed_node_group["green"].aws_eks_node_group.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_eks_node_group" "this" {
+      [32m+[0m[0m ami_type               = (known after apply)
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m capacity_type          = "ON_DEMAND"
+      [32m+[0m[0m cluster_name           = "adeen-devops"
+      [32m+[0m[0m disk_size              = (known after apply)
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m instance_types         = [
+          [32m+[0m[0m "t3.medium",
+        ]
+      [32m+[0m[0m node_group_name        = (known after apply)
+      [32m+[0m[0m node_group_name_prefix = "green-"
+      [32m+[0m[0m node_role_arn          = "arn:aws:iam::184437145027:role/green-eks-node-group-20251217212019548800000003"
+      [32m+[0m[0m release_version        = (known after apply)
+      [32m+[0m[0m resources              = (known after apply)
+      [32m+[0m[0m status                 = (known after apply)
+      [32m+[0m[0m subnet_ids             = [
+          [32m+[0m[0m "subnet-058f8e97354ed4878",
+          [32m+[0m[0m "subnet-0ab0004610945952b",
+        ]
+      [32m+[0m[0m tags                   = {
+          [32m+[0m[0m "Environment" = "dev"
+          [32m+[0m[0m "Name"        = "green"
+          [32m+[0m[0m "Terraform"   = "true"
+        }
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "dev"
+          [32m+[0m[0m "Name"        = "green"
+          [32m+[0m[0m "Terraform"   = "true"
+        }
+      [32m+[0m[0m version                = "1.29"
+
+      [32m+[0m[0m launch_template {
+          [32m+[0m[0m id      = (known after apply)
+          [32m+[0m[0m name    = (known after apply)
+          [32m+[0m[0m version = (known after apply)
+        }
+
+      [32m+[0m[0m node_repair_config (known after apply)
+
+      [32m+[0m[0m scaling_config {
+          [32m+[0m[0m desired_size = 1
+          [32m+[0m[0m max_size     = 2
+          [32m+[0m[0m min_size     = 1
+        }
+
+      [32m+[0m[0m timeouts {}
+
+      [32m+[0m[0m update_config {
+          [32m+[0m[0m max_unavailable_percentage = 33
+        }
+    }
+
+[1m  # module.eks.module.eks_managed_node_group["green"].aws_launch_template.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_launch_template" "this" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m default_version        = (known after apply)
+      [32m+[0m[0m description            = "Custom launch template for green EKS managed node group"
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m latest_version         = (known after apply)
+      [32m+[0m[0m name                   = (known after apply)
+      [32m+[0m[0m name_prefix            = "green-"
+      [32m+[0m[0m tags                   = {
+          [32m+[0m[0m "Environment" = "dev"
+          [32m+[0m[0m "Terraform"   = "true"
+        }
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "dev"
+          [32m+[0m[0m "Terraform"   = "true"
+        }
+      [32m+[0m[0m update_default_version = true
+      [32m+[0m[0m vpc_security_group_ids = [
+          [32m+[0m[0m "sg-08f01d2135802facb",
+        ]
+        [90m# (2 unchanged attributes hidden)[0m[0m
+
+      [32m+[0m[0m metadata_options {
+          [32m+[0m[0m http_endpoint               = "enabled"
+          [32m+[0m[0m http_protocol_ipv6          = (known after apply)
+          [32m+[0m[0m http_put_response_hop_limit = 2
+          [32m+[0m[0m http_tokens                 = "required"
+          [32m+[0m[0m instance_metadata_tags      = (known after apply)
+        }
+
+      [32m+[0m[0m monitoring {
+          [32m+[0m[0m enabled = true
+        }
+
+      [32m+[0m[0m tag_specifications {
+          [32m+[0m[0m resource_type = "instance"
+          [32m+[0m[0m tags          = {
+              [32m+[0m[0m "Environment" = "dev"
+              [32m+[0m[0m "Name"        = "green"
+              [32m+[0m[0m "Terraform"   = "true"
+            }
+        }
+      [32m+[0m[0m tag_specifications {
+          [32m+[0m[0m resource_type = "network-interface"
+          [32m+[0m[0m tags          = {
+              [32m+[0m[0m "Environment" = "dev"
+              [32m+[0m[0m "Name"        = "green"
+              [32m+[0m[0m "Terraform"   = "true"
+            }
+        }
+      [32m+[0m[0m tag_specifications {
+          [32m+[0m[0m resource_type = "volume"
+          [32m+[0m[0m tags          = {
+              [32m+[0m[0m "Environment" = "dev"
+              [32m+[0m[0m "Name"        = "green"
+              [32m+[0m[0m "Terraform"   = "true"
+            }
+        }
+    }
+
+[1m  # module.eks.module.kms.aws_kms_key.this[0][0m will be updated in-place
+[0m  [33m~[0m[0m resource "aws_kms_key" "this" {
+        id                                 = "744d2d80-774b-4de4-8935-904663c31764"
+      [33m~[0m[0m policy                             = jsonencode(
+          [33m~[0m[0m {
+              [33m~[0m[0m Statement = [
+                    [90m# (1 unchanged element hidden)[0m[0m
+                    {
+                        Action    = [
+                            "kms:Update*",
+                            "kms:UntagResource",
+                            "kms:TagResource",
+                            "kms:ScheduleKeyDeletion",
+                            "kms:Revoke*",
+                            "kms:ReplicateKey",
+                            "kms:Put*",
+                            "kms:List*",
+                            "kms:ImportKeyMaterial",
+                            "kms:Get*",
+                            "kms:Enable*",
+                            "kms:Disable*",
+                            "kms:Describe*",
+                            "kms:Delete*",
+                            "kms:Create*",
+                            "kms:CancelKeyDeletion",
+                        ]
+                        Effect    = "Allow"
+                        Principal = {
+                            AWS = "arn:aws:iam::184437145027:user/DevOps_Lab"
+                        }
+                        Resource  = "*"
+                        Sid       = "KeyAdministration"
+                    },
+                  [33m~[0m[0m {
+                      [33m~[0m[0m Principal = {
+                          [33m~[0m[0m AWS = "arn:aws:iam::184437145027:role/adeen-devops-cluster-20251217212019548300000002" [33m->[0m[0m "arn:aws:iam::184437145027:role/rouse-restaurant-eks-cluster-role-dev"
+                        }
+                        [90m# (4 unchanged attributes hidden)[0m[0m
+                    },
+                ]
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+        )
+        tags                               = {
+            "Environment"           = "dev"
+            "Terraform"             = "true"
+            "terraform-aws-modules" = "eks"
+        }
+        [90m# (13 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.eks.module.eks_managed_node_group["green"].module.user_data.null_resource.validate_cluster_service_cidr[0m will be created
+[0m  [32m+[0m[0m resource "null_resource" "validate_cluster_service_cidr" {
+      [32m+[0m[0m id = (known after apply)
+    }
+
+[1mPlan:[0m [0m9 to add, 2 to change, 7 to destroy.
+
+Changes to Outputs:
+  [32m+[0m[0m cluster_endpoint          = "https://B8DDF6F51E58DCC3BB7B325F1204198B.gr7.us-east-1.eks.amazonaws.com"
+[90m
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ[0m
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.

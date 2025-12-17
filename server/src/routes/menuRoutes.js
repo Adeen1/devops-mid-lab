@@ -28,12 +28,12 @@ router.post('/seed', async (req, res) => {
     await Menu.deleteMany({});
     const items = [
         // Starters
-        { name: "Garlic Bread", price: 5.99, description: "Toasted french baguette with garlic butter.", category: "Starter", imageUrl: "https://images.unsplash.com/photo-1573140247632-f84660f67126?auto=format&fit=crop&w=500&q=60" },
+        { name: "Garlic Bread", price: 5.99, description: "Toasted french baguette with garlic butter.", category: "Starter", imageUrl: "https://images.unsplash.com/photo-1556008531-57e6eefc7be4?auto=format&fit=crop&w=500&q=60" },
         { name: "Mozzarella Sticks", price: 7.99, description: "Golden fried cheese with marinara.", category: "Starter", imageUrl: "https://images.unsplash.com/photo-1531749668029-2db88e4276c7?auto=format&fit=crop&w=500&q=60" },
 
         // Burgers
         { name: "Double Cheeseburger", price: 12.99, description: "Two beef patties, cheddar, pickles.", category: "Burger", imageUrl: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=60" },
-        { name: "Chicken Royale", price: 11.99, description: "Crispy chicken breast, mayo, lettuce.", category: "Burger", imageUrl: "https://images.unsplash.com/photo-1615297348041-9a5499cfad13?auto=format&fit=crop&w=500&q=60" },
+        { name: "Chicken Royale", price: 11.99, description: "Crispy chicken breast, mayo, lettuce.", category: "Burger", imageUrl: "https://images.unsplash.com/photo-1637710847214-f91d99669e18?auto=format&fit=crop&w=500&q=60" },
 
         // Pizzas
         { name: "Pepperoni Pizza", price: 15.99, description: "Classic spicy pepperoni, mozzarella.", category: "Pizza", imageUrl: "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=500&q=60" },
@@ -43,7 +43,7 @@ router.post('/seed', async (req, res) => {
         // Drinks
         { name: "Cola", price: 2.99, description: "Cold fizzy drink over ice.", category: "Drink", imageUrl: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=60" },
         { name: "Lemonade", price: 3.49, description: "Freshly squeezed lemon with mint.", category: "Drink", imageUrl: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=60" },
-        { name: "Iced Coffee", price: 4.99, description: "Classic cold brew with milk.", category: "Drink", imageUrl: "https://images.unsplash.com/photo-1517701604599-bb29b5dd7359?auto=format&fit=crop&w=500&q=60" },
+        { name: "Iced Coffee", price: 4.99, description: "Classic cold brew with milk.", category: "Drink", imageUrl: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=500&q=60" },
 
         // Desserts
         { name: "Lava Cake", price: 6.99, description: "Warm chocolate cake with molten center.", category: "Dessert", imageUrl: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?auto=format&fit=crop&w=500&q=60" },
@@ -52,6 +52,26 @@ router.post('/seed', async (req, res) => {
     ];
     await Menu.insertMany(items);
     res.json({ msg: "Seeded" });
+});
+
+// Update Item (Admin)
+router.put('/:id', async (req, res) => {
+    try {
+        const updatedItem = await Menu.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(updatedItem);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+// Delete Item (Admin)
+router.delete('/:id', async (req, res) => {
+    try {
+        await Menu.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Item deleted' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 module.exports = router;

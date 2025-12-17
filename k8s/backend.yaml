@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
       - name: app
-        image: devops-mid-lab-app:latest # Ensure this image is built/pushed
-        imagePullPolicy: IfNotPresent # For local usage
+        image: ${REPLACE_WITH_ECR_BE_IMAGE}
+        imagePullPolicy: Always # For reliable updates
         ports:
         - containerPort: 5000
         env:
@@ -25,16 +25,12 @@ spec:
         - name: NODE_ENV
           value: "production"
         - name: MONGO_URI
+          value: "mongodb://mongo:27017/devops_mid_lab"
+        - name: POSTGRES_URI
           valueFrom:
             secretKeyRef:
               name: app-secrets
-              key: MONGO_URI
-        - name: POSTGRES_URI
-          # Construct connection string from secret parts or use full URI
-          # Example assumes code can handle parts or construct it.
-          # Here simply pointing hardcoded or using secret ref if available.
-          # For now, using composed string helper or assumption env var is set
-          value: postgresql://postgres:password123@postgres:5432/devops_mid_lab
+              key: DATABASE_URL
         - name: REDIS_URI
           value: redis://redis:6379
 

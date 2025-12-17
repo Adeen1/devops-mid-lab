@@ -2,7 +2,7 @@ name: CD Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "ahmad-v2" ]
   workflow_dispatch:
     inputs:
       run_cleanup:
@@ -14,7 +14,7 @@ on:
 env:
   AWS_REGION: us-east-1
   ECR_BACKEND_NAME: lab-exam-backend
-  ECR_FRONTEND_NAME: lab-exam-frontend
+  # ECR_FRONTEND_NAME not needed for monolithic
 
 jobs:
   build-and-deploy:
@@ -87,26 +87,15 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build, tag, and push Backend
+      - name: Build, tag, and push Monolithic App
         working-directory: .
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_BACKEND_NAME:$IMAGE_TAG -f Dockerfile.backend .
+          docker build -t $ECR_REGISTRY/$ECR_BACKEND_NAME:$IMAGE_TAG -f Dockerfile .
           docker push $ECR_REGISTRY/$ECR_BACKEND_NAME:$IMAGE_TAG
           echo "BACKEND_IMAGE=$ECR_REGISTRY/$ECR_BACKEND_NAME:$IMAGE_TAG" >> $GITHUB_ENV
-
-      - name: Build, tag, and push Frontend
-        working-directory: fe
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_FRONTEND_NAME:$IMAGE_TAG -f Dockerfile .
-          docker push $ECR_REGISTRY/$ECR_FRONTEND_NAME:$IMAGE_TAG
-          echo "FRONTEND_IMAGE=$ECR_REGISTRY/$ECR_FRONTEND_NAME:$IMAGE_TAG" >> $GITHUB_ENV
-
 
       - name: Create Kubeconfig
         run: |
@@ -114,8 +103,8 @@ jobs:
 
       - name: Deploy to K8s
         run: |
-          # Ensure namespace exists
-          kubectl create namespace lab-final --dry-run=client -o yaml | kubectl apply -f -
+          # Ensure namespace exists (using devops-mid-lab to match k8s files)
+          kubectl create namespace devops-mid-lab --dry-run=client -o yaml | kubectl apply -f -
 
           # Get RDS Endpoint from Terraform output
           cd infra
@@ -125,19 +114,18 @@ jobs:
           echo "Deploying with DB: $RDS_ENDPOINT"
           
           # Create secret for DB connection
-          # We use --dry-run=client -o yaml | kubectl apply -f - to make it idempotent (safe to re-run)
           kubectl create secret generic app-secrets \
-            --namespace lab-final \
+            --namespace devops-mid-lab \
             --from-literal=DATABASE_URL="postgres://dbadmin:dbpassword@$RDS_ENDPOINT/labdb" \
+            --from-literal=MONGO_URI="mongodb://mongo:27017/devops_mid_lab" \
             --dry-run=client -o yaml | kubectl apply -f -
             
-          # Apply Redis
+          # Apply Mongo & Postgres (K8s versions) and Redis
+          kubectl apply -f k8s/database.yaml
           kubectl apply -f k8s/redis.yaml
           
           # Export env vars for verification and substitution
           export REPLACE_WITH_ECR_BE_IMAGE=$BACKEND_IMAGE
-          export REPLACE_WITH_ECR_FE_IMAGE=$FRONTEND_IMAGE
           
-          # Apply Backend & Frontend with envsubst
+          # Apply Backend (Monolith) with envsubst
           envsubst < k8s/backend.yaml | kubectl apply -f -
-          envsubst < k8s/frontend.yaml | kubectl apply -f -

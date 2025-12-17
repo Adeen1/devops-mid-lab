@@ -25,6 +25,11 @@ module "eks" {
 
   enable_cluster_creator_admin_permissions = true
 
+  # Avoid recreation if cluster exists
+  create_iam_role = false
+  iam_role_arn    = "arn:aws:iam::184437145027:role/rouse-restaurant-eks-cluster-role-dev"
+  bootstrap_self_managed_addons = false
+
   tags = {
     Environment = "dev"
     Terraform   = "true"
