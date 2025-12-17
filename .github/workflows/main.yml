@@ -34,8 +34,10 @@ jobs:
         cd server && npm run lint --if-present
         cd ../client && npm run lint --if-present
 
-    # - name: Run Tests
-    #   run: npm test
+    - name: Run Tests
+      run: |
+        cd server && npm test
+        cd ../client && npm test
 
   build-push-image:
     name: Build & Push Docker Image
