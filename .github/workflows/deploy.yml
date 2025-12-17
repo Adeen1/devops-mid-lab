@@ -1,0 +1,93 @@
+name: CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-1
+  ECR_BACKEND_NAME: lab-exam-backend
+  ECR_FRONTEND_NAME: lab-exam-frontend
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} # User provided
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push Backend
+        working-directory: .
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_BACKEND_NAME:$IMAGE_TAG -f Dockerfile.backend .
+          docker push $ECR_REGISTRY/$ECR_BACKEND_NAME:$IMAGE_TAG
+          echo "BACKEND_IMAGE=$ECR_REGISTRY/$ECR_BACKEND_NAME:$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: Build, tag, and push Frontend
+        working-directory: fe
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_FRONTEND_NAME:$IMAGE_TAG -f Dockerfile .
+          docker push $ECR_REGISTRY/$ECR_FRONTEND_NAME:$IMAGE_TAG
+          echo "FRONTEND_IMAGE=$ECR_REGISTRY/$ECR_FRONTEND_NAME:$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init & Apply
+        working-directory: infra
+        run: |
+          terraform init
+          terraform apply -auto-approve
+
+      - name: Create Kubeconfig
+        run: |
+          aws eks update-kubeconfig --name lab-exam-cluster --region ${{ env.AWS_REGION }}
+
+      - name: Deploy to K8s
+        run: |
+          # Use envsubst to replace placeholders in k8s manifests
+          # Prepare secrets (Assuming DB URL is constructed from Terraform output or hardcoded for lab)
+          # For Lab, we might need to get RDS endpoint from TF output.
+          
+          # Get RDS Endpoint
+          cd infra
+          RDS_ENDPOINT=$(terraform output -raw db_instance_endpoint)
+          cd ..
+          
+          echo "Deploying with DB: $RDS_ENDPOINT"
+          
+          # Create env vars for substitution
+          export REPLACE_WITH_ECR_BE_IMAGE=$BACKEND_IMAGE
+          export REPLACE_WITH_ECR_FE_IMAGE=$FRONTEND_IMAGE
+          
+          # Simple check if secret exists, if not create
+          kubectl create secret generic app-secrets \
+            --namespace lab-final \
+            --from-literal=DATABASE_URL="postgres://dbadmin:dbpassword@$RDS_ENDPOINT/labdb" \
+            --dry-run=client -o yaml | kubectl apply -f -
+            
+          # Apply Redis
+          kubectl apply -f k8s/redis.yaml
+          
+          # Apply Backend & Frontend with envsubst
+          envsubst < k8s/backend.yaml | kubectl apply -f -
+          envsubst < k8s/frontend.yaml | kubectl apply -f -

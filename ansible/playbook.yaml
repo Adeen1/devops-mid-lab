@@ -1,0 +1,15 @@
+---
+- name: Configure K8s and Deploy
+  hosts: local
+  gather_facts: false
+  tasks:
+    - name: Ensure namespace exists
+      kubernetes.core.k8s:
+        name: lab-final
+        api_version: v1
+        kind: Namespace
+        state: present
+
+    - name: Display connection info
+      debug:
+        msg: "Connected to K8s cluster and ensured namespace 'lab-final' exists."
