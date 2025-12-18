@@ -30,10 +30,16 @@ const { createOrderTable } = require('./models/Order');
 // Start Server
 const startServer = async () => {
     const { connectDBs, getPgPool } = require('./config/db'); // Need to export pool
-    await connectDBs();
 
-    const pool = getPgPool();
-    await createOrderTable(pool);
+    let pool = null;
+    try {
+        await connectDBs();
+        pool = getPgPool();
+        await createOrderTable(pool);
+        console.log("Database connected successfully");
+    } catch (err) {
+        console.error("Failed to connect to DB, starting server anyway:", err);
+    }
 
     // Routes
     app.use('/api/menu', menuRoutes);
