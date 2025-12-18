@@ -1,7 +1,8 @@
 module "db" {
   source = "terraform-aws-modules/rds/aws"
   manage_master_user_password = false
-
+  publicly_accessible         = true
+  
   identifier = "devops-mid-lab-db"
 
   engine            = "postgres"
@@ -29,7 +30,7 @@ module "db" {
 
   # DB subnet group
   create_db_subnet_group = true
-  subnet_ids             = module.vpc.private_subnets
+  subnet_ids             = module.vpc.public_subnets
 
   # DB parameter group
   family = "postgres15"
