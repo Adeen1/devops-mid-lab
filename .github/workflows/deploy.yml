@@ -153,12 +153,8 @@ jobs:
           
           echo "Deploying with DB: $RDS_ENDPOINT"
           
-          # Create secret for DB connection
-          kubectl create secret generic app-secrets \
-            --namespace devops-mid-lab \
-            --from-literal=POSTGRES_URI="postgres://postgres:password123@$RDS_ENDPOINT/devops_mid_lab?ssl=true" \
-            --from-literal=MONGO_URI="mongodb://mongo:27017/devops_mid_lab" \
-            --dry-run=client -o yaml | kubectl apply -f -
+          # Apply secrets from file (using local DB config)
+          kubectl apply -f k8s/secrets.yaml
             
           # Apply Mongo & Postgres (K8s versions) and Redis
           kubectl apply -f k8s/database.yaml
