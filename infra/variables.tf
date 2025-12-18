@@ -27,7 +27,7 @@ variable "db_password" {
   description = "Database administrator password"
   type        = string
   sensitive   = true
-  default     = "password123!" # Change in production!
+  default     = "password123" # Change in production!
 }
 
 variable "db_name" {
