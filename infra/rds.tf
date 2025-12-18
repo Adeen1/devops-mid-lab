@@ -1,5 +1,6 @@
 module "db" {
   source = "terraform-aws-modules/rds/aws"
+  manage_master_user_password = false
 
   identifier = "devops-mid-lab-db"
 
