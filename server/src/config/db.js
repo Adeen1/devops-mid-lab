@@ -29,6 +29,8 @@ const connectPostgres = async (retries = 5) => {
         config.ssl = { rejectUnauthorized: false };
     }
 
+    config.connectionTimeoutMillis = 5000; // Fail fast so server can start
+
     const pool = new Pool(config);
     try {
         await pool.connect();
