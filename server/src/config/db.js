@@ -21,10 +21,15 @@ const connectMongo = async (retries = 5) => {
 let pgPool = null;
 
 const connectPostgres = async (retries = 5) => {
-    const pool = new Pool({
+    const config = {
         connectionString: process.env.POSTGRES_URI,
-        ssl: process.env.POSTGRES_URI && process.env.POSTGRES_URI.includes('ssl=true') ? { rejectUnauthorized: false } : false
-    });
+    };
+
+    if (process.env.POSTGRES_URI && process.env.POSTGRES_URI.includes('ssl=true')) {
+        config.ssl = { rejectUnauthorized: false };
+    }
+
+    const pool = new Pool(config);
     try {
         await pool.connect();
         console.log('PostgreSQL Connected');
